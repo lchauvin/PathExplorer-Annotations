@@ -36,6 +36,7 @@
 #include "qSlicerModuleManager.h"
 #include "qSlicerPathXplorerFiducialItem.h"
 #include "qSlicerPathXplorerTrajectoryItem.h"
+#include "qSlicerPathXplorerReslicingWidget.h"
 
 // MRML
 #include "vtkMRMLAnnotationFiducialNode.h"
@@ -43,6 +44,7 @@
 #include "vtkMRMLAnnotationPointDisplayNode.h"
 #include "vtkMRMLAnnotationRulerNode.h"
 #include "vtkMRMLPathPlannerTrajectoryNode.h"
+#include "vtkMRMLSliceNode.h"
 
 //-----------------------------------------------------------------------------
 /// \ingroup Slicer_QtModules_ExtensionTemplate
@@ -54,6 +56,8 @@ public:
   vtkMRMLPathPlannerTrajectoryNode *selectedTrajectoryNode;
   double targetTableWidgetItemColor[3];
   double entryTableWidgetItemColor[3];
+  typedef std::vector<qSlicerPathXplorerReslicingWidget*> ReslicerVector;
+  ReslicerVector reslicerList;
 };
 
 //-----------------------------------------------------------------------------
@@ -72,7 +76,6 @@ qSlicerPathXplorerModuleWidgetPrivate()
   this->entryTableWidgetItemColor[0] = 79;
   this->entryTableWidgetItemColor[1] = 148;
   this->entryTableWidgetItemColor[2] = 205;
-
 }
 
 //-----------------------------------------------------------------------------
@@ -163,18 +166,18 @@ setup()
 	  this, SLOT(onTrajectoryCellChanged(int,int)));
 
   // Visualization Widget
-  connect(d->VisualizationWidget, SIGNAL(entryDisplayModified(vtkMRMLAnnotationFiducialNode*, bool)),
-	  this, SLOT(onEntryDisplayModified(vtkMRMLAnnotationFiducialNode*, bool)));
-
-  connect(d->VisualizationWidget, SIGNAL(targetDisplayModified(vtkMRMLAnnotationFiducialNode*, bool)),
-	  this, SLOT(onTargetDisplayModified(vtkMRMLAnnotationFiducialNode*, bool)));
-
-  connect(d->VisualizationWidget, SIGNAL(entryProjectionModified(vtkMRMLAnnotationFiducialNode*, bool)),
-	  this, SLOT(onEntryProjectionModified(vtkMRMLAnnotationFiducialNode*, bool)));
-
-  connect(d->VisualizationWidget, SIGNAL(targetProjectionModified(vtkMRMLAnnotationFiducialNode*, bool)),
-	  this, SLOT(onTargetProjectionModified(vtkMRMLAnnotationFiducialNode*, bool)));
-
+//  connect(d->VisualizationWidget, SIGNAL(entryDisplayModified(vtkMRMLAnnotationFiducialNode*, bool)),
+//	  this, SLOT(onEntryDisplayModified(vtkMRMLAnnotationFiducialNode*, bool)));
+//
+//  connect(d->VisualizationWidget, SIGNAL(targetDisplayModified(vtkMRMLAnnotationFiducialNode*, bool)),
+//	  this, SLOT(onTargetDisplayModified(vtkMRMLAnnotationFiducialNode*, bool)));
+//
+//  connect(d->VisualizationWidget, SIGNAL(entryProjectionModified(vtkMRMLAnnotationFiducialNode*, bool)),
+//	  this, SLOT(onEntryProjectionModified(vtkMRMLAnnotationFiducialNode*, bool)));
+//
+//  connect(d->VisualizationWidget, SIGNAL(targetProjectionModified(vtkMRMLAnnotationFiducialNode*, bool)),
+//	  this, SLOT(onTargetProjectionModified(vtkMRMLAnnotationFiducialNode*, bool)));
+//
   // mrmlScene
   connect(this, SIGNAL(mrmlSceneChanged(vtkMRMLScene*)),
 	  this, SLOT(onMRMLSceneChanged(vtkMRMLScene*)));
@@ -545,16 +548,16 @@ deleteTrajectory(int trajectoryRow)
   annotationLogic->GetActiveHierarchyNode()->Modified();
 
   // Necessary to disconnect all signals of object before being removed
-  d->VisualizationWidget->setTrajectoryItem(NULL);
+  //d->VisualizationWidget->setTrajectoryItem(NULL);
   
   // Remove from widget
   d->TrajectoryTableWidget->removeRow(trajectoryRow);
 
   // Set next item to Visualization widget
-  int newRow = d->TrajectoryTableWidget->currentRow();
-  qSlicerPathXplorerTrajectoryItem* nextItem =
-    dynamic_cast<qSlicerPathXplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(newRow,0));
-  d->VisualizationWidget->setTrajectoryItem(nextItem);
+  //int newRow = d->TrajectoryTableWidget->currentRow();
+  //qSlicerPathXplorerTrajectoryItem* nextItem =
+  //  dynamic_cast<qSlicerPathXplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(newRow,0));
+  //d->VisualizationWidget->setTrajectoryItem(nextItem);
 }
 
 //-----------------------------------------------------------------------------
@@ -792,11 +795,21 @@ onTrajectoryCellClicked(int row, int column)
     }
 
   // Update visualization widget
-  if (!d->VisualizationWidget || !selectedTrajectory)
+//  if (!d->VisualizationWidget || !selectedTrajectory)
+//    {
+//    return;
+//    }
+//  d->VisualizationWidget->setTrajectoryItem(selectedTrajectory);
+
+  for (qSlicerPathXplorerModuleWidgetPrivate::ReslicerVector::iterator it = d->reslicerList.begin(); it != d->reslicerList.end(); ++it)
     {
-    return;
+    qSlicerPathXplorerReslicingWidget* currentReslicer
+      = *it;
+    if (currentReslicer)
+      {
+      currentReslicer->setTrajectoryItem(selectedTrajectory);
+      }
     }
-  d->VisualizationWidget->setTrajectoryItem(selectedTrajectory);
 }
 
 
@@ -805,7 +818,7 @@ void qSlicerPathXplorerModuleWidget::
 onMRMLSceneChanged(vtkMRMLScene* newScene)
 {
   Q_D(qSlicerPathXplorerModuleWidget);
-  
+
   if (!d->TargetPointListNodeSelector |
       !d->EntryPointListNodeSelector |
       !d->TrajectoryListNodeSelector)
@@ -851,13 +864,47 @@ onMRMLSceneChanged(vtkMRMLScene* newScene)
   // Create new PathPlannerTrajectory Node
   d->TrajectoryListNodeSelector->addNode();
 
-  // Update widget
-  if (d->VisualizationWidget)
+  // Clear reslicing widget layout
+  QLayoutItem* item;
+  while ( ( item = d->ReslicingWidgetLayout->takeAt(0)) != NULL)
     {
-    d->VisualizationWidget->setMRMLScene(newScene);
+    delete item->widget();
+    delete item;
     }
+
+  // Add reslicing widgets
+  vtkMRMLSliceNode* redViewer = vtkMRMLSliceNode::SafeDownCast(newScene->GetNodeByID("vtkMRMLSliceNodeRed"));
+  this->addNewReslicer(redViewer);
+  vtkMRMLSliceNode* yellowViewer = vtkMRMLSliceNode::SafeDownCast(newScene->GetNodeByID("vtkMRMLSliceNodeYellow"));
+  this->addNewReslicer(yellowViewer);
+  vtkMRMLSliceNode* greenViewer = vtkMRMLSliceNode::SafeDownCast(newScene->GetNodeByID("vtkMRMLSliceNodeGreen"));
+  this->addNewReslicer(greenViewer);
+
+  // Update widget
+//  if (d->VisualizationWidget)
+//    {
+//    d->VisualizationWidget->setMRMLScene(newScene);
+//    }
 }
 
+//-----------------------------------------------------------------------------
+void qSlicerPathXplorerModuleWidget::
+addNewReslicer(vtkMRMLSliceNode* sliceNode)
+{
+  Q_D(qSlicerPathXplorerModuleWidget);
+
+  if (sliceNode)
+    {
+    qSlicerPathXplorerReslicingWidget* reslicer = 
+      new qSlicerPathXplorerReslicingWidget(sliceNode, d->CollapsibleButton);
+    if (reslicer)
+      {
+      reslicer->setLayoutBehavior( qMRMLViewControllerBar::Panel );
+      d->ReslicingWidgetLayout->addWidget(reslicer);
+      d->reslicerList.push_back(reslicer);
+      }
+    }
+}
 
 //-----------------------------------------------------------------------------
 void qSlicerPathXplorerModuleWidget::

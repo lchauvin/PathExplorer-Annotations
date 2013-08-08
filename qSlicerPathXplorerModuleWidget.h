@@ -34,8 +34,9 @@
 #include <QTableWidget>
 
 class qSlicerPathXplorerModuleWidgetPrivate;
-class vtkMRMLNode;
 class vtkMRMLAnnotationFiducialNode;
+class vtkMRMLNode;
+class vtkMRMLSliceNode;
 
 /// \ingroup Slicer_QtModules_ExtensionTemplate
 class Q_SLICER_QTMODULES_PATHXPLORER_EXPORT qSlicerPathXplorerModuleWidget :
@@ -63,6 +64,7 @@ public slots:
   void onTrajectoryListNodeChanged(vtkMRMLNode* newList);
   void onTrajectoryCellClicked(int row, int column);
   void onMRMLSceneChanged(vtkMRMLScene* newScene);
+  void addNewReslicer(vtkMRMLSliceNode* sliceNode);
   void onTargetSelectionChanged();
   void onEntrySelectionChanged();
   void onTrajectoryCellChanged(int row, int column);

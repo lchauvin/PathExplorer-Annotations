@@ -316,6 +316,7 @@ void qSlicerPathXplorerTableWidget
 ::onCellChanged(int row, int column)
 {
   Q_D(qSlicerPathXplorerTableWidget);
+  Q_UNUSED(column);
 
   if (!d->TableWidget->item(row,0) ||
       !d->TableWidget->item(row,1) ||

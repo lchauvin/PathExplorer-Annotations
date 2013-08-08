@@ -14,25 +14,25 @@ set(${KIT}_SRCS
   qSlicer${MODULE_NAME}FiducialItem.h
   qSlicer${MODULE_NAME}TrajectoryItem.cxx
   qSlicer${MODULE_NAME}TrajectoryItem.h
-  qSlicer${MODULE_NAME}VisualizationWidget.cxx
-  qSlicer${MODULE_NAME}VisualizationWidget.h
+  qSlicer${MODULE_NAME}ReslicingWidget.cxx
+  qSlicer${MODULE_NAME}ReslicingWidget.h
   )
 
 set(${KIT}_MOC_SRCS
   qSlicer${MODULE_NAME}TableWidget.h
   qSlicer${MODULE_NAME}FiducialItem.h
   qSlicer${MODULE_NAME}TrajectoryItem.h
-  qSlicer${MODULE_NAME}VisualizationWidget.h
+  qSlicer${MODULE_NAME}ReslicingWidget.h
   )
 
 set(${KIT}_UI_SRCS
   ../Resources/UI/qSlicer${MODULE_NAME}TableWidget.ui
-  ../Resources/UI/qSlicer${MODULE_NAME}VisualizationWidget.ui
+  ../Resources/UI/qSlicer${MODULE_NAME}ReslicingWidget.ui
   )
 
 set(${KIT}_RESOURCES
   ../Resources/UI/qSlicer${MODULE_NAME}TableWidget.ui
-  ../Resources/UI/qSlicer${MODULE_NAME}VisualizationWidget.ui
+  ../Resources/UI/qSlicer${MODULE_NAME}ReslicingWidget.ui
   )
 
 set(${KIT}_TARGET_LIBRARIES

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>308</width>
-    <height>276</height>
+    <width>366</width>
+    <height>320</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -147,7 +147,7 @@
        </widget>
       </item>
       <item>
-       <widget class="qSlicerPathXplorerVisualizationWidget" name="VisualizationWidget" native="true"/>
+       <layout class="QVBoxLayout" name="ReslicingWidgetLayout"/>
       </item>
      </layout>
     </widget>
@@ -284,12 +284,6 @@
    <slots>
     <slot>setMRMLScene(vtkMRMLScene*)</slot>
    </slots>
-  </customwidget>
-  <customwidget>
-   <class>qSlicerPathXplorerVisualizationWidget</class>
-   <extends>QWidget</extends>
-   <header>qSlicerPathXplorerVisualizationWidget.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

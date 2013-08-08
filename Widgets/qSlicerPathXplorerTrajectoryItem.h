@@ -123,7 +123,7 @@ setResliceViewer(const char* viewer)
   if (viewer)
     {
     this->ResliceViewer.assign(viewer);
-    emit resliceModified();
+    //emit resliceModified();
     }
 }
 

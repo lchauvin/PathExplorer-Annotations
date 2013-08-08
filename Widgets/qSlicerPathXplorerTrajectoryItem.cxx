@@ -27,6 +27,7 @@
 
 // MRML includes
 #include "vtkMRMLAnnotationFiducialNode.h"
+#include "vtkMRMLAnnotationPointDisplayNode.h"
 #include "vtkMRMLAnnotationRulerNode.h"
 #include "vtkMRMLScene.h"
 
@@ -74,6 +75,7 @@ setEntryPoint(vtkMRMLAnnotationFiducialNode* entryPoint)
     {
     qvtkReconnect(this->EntryPoint, entryPoint, vtkCommand::ModifiedEvent,
                   this, SLOT(updateItem()));
+    entryPoint->GetAnnotationPointDisplayNode()->SetGlyphType(vtkMRMLAnnotationPointDisplayNode::Sphere3D);
     this->EntryPoint = entryPoint;
     this->updateItem();
     }
@@ -94,6 +96,7 @@ setTargetPoint(vtkMRMLAnnotationFiducialNode* targetPoint)
     {
     qvtkReconnect(this->TargetPoint, targetPoint, vtkCommand::ModifiedEvent,
                   this, SLOT(updateItem()));
+    targetPoint->GetAnnotationPointDisplayNode()->SetGlyphType(vtkMRMLAnnotationPointDisplayNode::Sphere3D);
     this->TargetPoint = targetPoint;
     this->updateItem();
     }

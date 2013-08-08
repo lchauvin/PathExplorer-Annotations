@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>390</width>
-    <height>147</height>
+    <width>429</width>
+    <height>204</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,83 +26,105 @@
      <item row="0" column="1">
       <widget class="QComboBox" name="ResliceComboBox"/>
      </item>
-     <item row="1" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="ResliceSliderLabel">
        <property name="text">
         <string>Angle</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
+     <item row="4" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
         <string>Display</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="4" column="1">
       <widget class="QCheckBox" name="DisplayPathCheckbox">
        <property name="text">
         <string>Path</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="2">
+     <item row="4" column="2">
       <widget class="QCheckBox" name="DisplayEntryCheckbox">
        <property name="text">
         <string>Entry</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="3">
+     <item row="4" column="3">
       <widget class="QCheckBox" name="DisplayTargetCheckbox">
        <property name="text">
         <string>Target</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
+     <item row="5" column="0">
       <widget class="QLabel" name="label_4">
        <property name="text">
         <string>Projection</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="5" column="1">
       <widget class="QCheckBox" name="ProjectionPathCheckbox">
        <property name="text">
         <string>Path</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="2">
+     <item row="5" column="2">
       <widget class="QCheckBox" name="ProjectionEntryCheckbox">
        <property name="text">
         <string>Entry</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="3">
+     <item row="5" column="3">
       <widget class="QCheckBox" name="ProjectionTargetCheckbox">
        <property name="text">
         <string>Target</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
-      <widget class="QCheckBox" name="PerpendicularCheckbox">
-       <property name="text">
-        <string>Perpendicular</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1" colspan="3">
+     <item row="3" column="1" colspan="3">
       <widget class="ctkSliderWidget" name="ResliceSlider">
        <property name="minimum">
         <double>-180.000000000000000</double>
        </property>
        <property name="maximum">
         <double>180.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>With</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="qMRMLNodeComboBox" name="PathReslicingComboBox">
+       <property name="nodeTypes">
+        <stringlist>
+         <string>vtkMRMLAnnotationRulerNode</string>
+        </stringlist>
+       </property>
+       <property name="addEnabled">
+        <bool>false</bool>
+       </property>
+       <property name="removeEnabled">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QCheckBox" name="PerpendicularCheckbox">
+       <property name="text">
+        <string>Perpendicular</string>
        </property>
       </widget>
      </item>
@@ -124,6 +146,11 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>qMRMLNodeComboBox</class>
+   <extends>QWidget</extends>
+   <header>qMRMLNodeComboBox.h</header>
+  </customwidget>
   <customwidget>
    <class>qSlicerWidget</class>
    <extends>QWidget</extends>
