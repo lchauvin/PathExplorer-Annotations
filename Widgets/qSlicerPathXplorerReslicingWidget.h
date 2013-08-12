@@ -54,13 +54,12 @@ public:
 public slots:
   void setTrajectoryItem(qSlicerPathXplorerTrajectoryItem* item);
   void onResliceToggled(bool buttonStatus);
-  void isTrajectoryDrivingSliceNode();
   void onPerpendicularToggled(bool status);
   void onResliceValueChanged(int resliceValue);
   void resliceWithRuler(vtkMRMLAnnotationRulerNode* ruler,
 			vtkMRMLSliceNode* viewer,
-			double angleOrPosition, 
-			bool perpendicular);
+			bool perpendicular,
+			double resliceValue);
 
 private:
   Q_DECLARE_PRIVATE(qSlicerPathXplorerReslicingWidget);

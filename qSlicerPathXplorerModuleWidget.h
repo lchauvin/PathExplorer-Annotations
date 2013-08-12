@@ -62,7 +62,7 @@ public slots:
   void onUpdateButtonClicked();
   void onClearButtonClicked();
   void onTrajectoryListNodeChanged(vtkMRMLNode* newList);
-  void onTrajectoryCellClicked(int row, int column);
+  void onTrajectorySelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
   void onMRMLSceneChanged(vtkMRMLScene* newScene);
   void addNewReslicer(vtkMRMLSliceNode* sliceNode);
   void onTargetSelectionChanged();

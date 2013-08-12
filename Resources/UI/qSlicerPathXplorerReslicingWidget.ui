@@ -17,7 +17,7 @@
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
-      <widget class="QPushButton" name="ActivateReslicingButton">
+      <widget class="QPushButton" name="ResliceButton">
        <property name="text">
         <string>Activate</string>
        </property>
@@ -27,7 +27,7 @@
       </widget>
      </item>
      <item row="0" column="1" colspan="4">
-      <widget class="QSlider" name="ResliceAnglePositionSlider">
+      <widget class="QSlider" name="ResliceSlider">
        <property name="maximum">
         <number>100</number>
        </property>
@@ -37,14 +37,14 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLabel" name="DistancePositionLabel">
+      <widget class="QLabel" name="DistanceAngleLabel">
        <property name="text">
         <string>Distance:</string>
        </property>
       </widget>
      </item>
      <item row="1" column="2">
-      <widget class="QLabel" name="DistanceAngleValueLabel">
+      <widget class="QLabel" name="ResliceValueLabel">
        <property name="text">
         <string>0</string>
        </property>
@@ -73,7 +73,7 @@
      <item row="2" column="1" colspan="4">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QRadioButton" name="PerpendicularRadioButton">
+        <widget class="QRadioButton" name="ReslicePerpendicularRadioButton">
          <property name="text">
           <string>Perpendicular</string>
          </property>
@@ -83,7 +83,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QRadioButton" name="InPlaneRadioButton">
+        <widget class="QRadioButton" name="ResliceInPlaneRadioButton">
          <property name="text">
           <string>In Plane</string>
          </property>
