@@ -456,8 +456,8 @@ void qSlicerPathXplorerReslicingWidget
     }
 
   // Get ruler points
-  double point1[3];
-  double point2[3];
+  double point1[4] = {0,0,0,0};
+  double point2[4] = {0,0,0,0};
   ruler->GetPositionWorldCoordinates1(point1);
   ruler->GetPositionWorldCoordinates2(point2);
 
