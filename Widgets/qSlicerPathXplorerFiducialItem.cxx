@@ -65,7 +65,7 @@ updateItem()
     return;
     }
 
-  double targetPosition[3];
+  double targetPosition[4] = {0,0,0,0};
   this->FiducialNode->GetFiducialWorldCoordinates(targetPosition);
 
   double itemRow = this->row();
