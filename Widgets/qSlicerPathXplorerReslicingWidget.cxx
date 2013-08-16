@@ -282,10 +282,26 @@ qSlicerPathXplorerReslicingWidget
   double color[3];
   sliceNode->GetLayoutColor(color);
   std::stringstream buttonBgColor;
-  buttonBgColor << "QPushButton { background-color: rgba("
+  buttonBgColor << "QPushButton { background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgba("
 		<< color[0]*255 << ","
 		<< color[1]*255 << ","
-		<< color[2]*255 << ");}";
+		<< color[2]*255 << ","
+		<< "128), stop: 1 rgba("
+		<< color[0]*255 << ","
+		<< color[1]*255 << ","
+		<< color[2]*255 << ","
+		<< "128)); width:100%; border:1px solid black;} "
+		<< ":checked { background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgba("
+		<< color[0]*255 << ","
+		<< color[1]*255 << ","
+		<< color[2]*255 << ","
+		<< "255), stop: 1 rgba("
+		<< color[0]*255 << ","
+		<< color[1]*255 << ","
+		<< color[2]*255 << ","
+		<< "255)); width:100%; border:1px solid black;} ";
+
+  d->ResliceButton->setAutoFillBackground(true);
   d->ResliceButton->setStyleSheet(buttonBgColor.str().c_str());
 
   connect(d->ResliceButton, SIGNAL(toggled(bool)),
