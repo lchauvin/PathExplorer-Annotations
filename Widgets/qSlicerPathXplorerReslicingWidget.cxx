@@ -25,9 +25,6 @@
 #include "qSlicerPathXplorerTrajectoryItem.h"
 #include "ui_qSlicerPathXplorerReslicingWidget.h"
 
-#include "qMRMLViewControllerBar_p.h"
-#include <qMRMLViewControllerBar.h>
-
 #include <vtkMRMLAnnotationLineDisplayNode.h>
 #include <vtkMRMLAnnotationRulerNode.h>
 #include <vtkMRMLSliceNode.h>
@@ -44,39 +41,36 @@ class qSlicerPathXplorerReslicingWidget;
 //-----------------------------------------------------------------------------
 /// \ingroup Slicer_QtModules_PathXplorer
 class Q_SLICER_MODULE_PATHXPLORER_WIDGETS_EXPORT qSlicerPathXplorerReslicingWidgetPrivate
-  : public qMRMLViewControllerBarPrivate, public Ui_qSlicerPathXplorerReslicingWidget
+  : public Ui_qSlicerPathXplorerReslicingWidget
 {
   Q_DECLARE_PUBLIC(qSlicerPathXplorerReslicingWidget);
 
  public:
-  typedef qMRMLViewControllerBarPrivate Superclass;
-
   qSlicerPathXplorerReslicingWidgetPrivate(
     qSlicerPathXplorerReslicingWidget& object);
   virtual ~qSlicerPathXplorerReslicingWidgetPrivate();
+  virtual void setupUi(qSlicerPathXplorerReslicingWidget*);
 
-  virtual void init();
   void loadAttributesFromViewer();
   void saveAttributesToViewer();
   void updateWidget();
 
-  qSlicerPathXplorerTrajectoryItem*	TrajectoryItem;
-  vtkMRMLSliceNode*			SliceNode;
-  std::string                           DrivingRulerNodeID;
-  std::string				DrivingRulerNodeName;
-  double				ResliceAngle;
-  double				ReslicePosition;
-  bool					ReslicePerpendicular;
-  
  protected:
-  virtual void setupPopupUi();
+  qSlicerPathXplorerReslicingWidget * const	q_ptr;
+  qSlicerPathXplorerTrajectoryItem*		TrajectoryItem;
+  vtkMRMLSliceNode*				SliceNode;
+  std::string					DrivingRulerNodeID;
+  std::string					DrivingRulerNodeName;
+  double					ResliceAngle;
+  double					ReslicePosition;
+  bool						ReslicePerpendicular;
 };
 
 //-----------------------------------------------------------------------------
 qSlicerPathXplorerReslicingWidgetPrivate
 ::qSlicerPathXplorerReslicingWidgetPrivate(
   qSlicerPathXplorerReslicingWidget& object)
-  : Superclass(object)
+  : q_ptr(&object)
 {
   this->DrivingRulerNodeID.assign("");
   this->DrivingRulerNodeName.assign("");
@@ -95,21 +89,9 @@ qSlicerPathXplorerReslicingWidgetPrivate
 
 //-----------------------------------------------------------------------------
 void qSlicerPathXplorerReslicingWidgetPrivate
-::setupPopupUi()
+::setupUi(qSlicerPathXplorerReslicingWidget* widget)
 {
-  this->Superclass::setupPopupUi();
-  this->PopupWidget->setAlignment(Qt::AlignBottom | Qt::AlignLeft);
-  this->Ui_qSlicerPathXplorerReslicingWidget::setupUi(this->PopupWidget);
-}
-
-
-//-----------------------------------------------------------------------------
-void qSlicerPathXplorerReslicingWidgetPrivate
-::init()
-{
-  this->Superclass::init();
-  this->ViewLabel->setText(qSlicerPathXplorerReslicingWidget::tr("1"));
-  this->BarLayout->addStretch(1);
+  this->Ui_qSlicerPathXplorerReslicingWidget::setupUi(widget);
 }
 
 //-----------------------------------------------------------------------------
@@ -160,10 +142,6 @@ void qSlicerPathXplorerReslicingWidgetPrivate
     {
     this->ReslicePerpendicular = strcmp(perpStr, "ON") == 0;
     }
-
-  this->ResliceSlider->setValue(this->ReslicePerpendicularRadioButton->isChecked() ? 
-				this->ReslicePosition : 
-				this->ResliceAngle);
 }
 
 //-----------------------------------------------------------------------------
@@ -221,71 +199,94 @@ void qSlicerPathXplorerReslicingWidgetPrivate
   const char* distanceLabel = this->ReslicePerpendicular ? "Distance: " : "Angle: ";
   const char* unitsLabel = this->ReslicePerpendicular ? "mm" : "deg";
   
-  // Update widget title
-  if (!this->DrivingRulerNodeName.empty())
-    {
-    std::stringstream barTitle;
-    barTitle << this->SliceNode->GetLayoutLabel() << " : " << this->DrivingRulerNodeName;
-    this->ViewLabel->setText(barTitle.str().c_str());      
-    }
-
   // Update reslice button
-  if (!this->DrivingRulerNodeID.empty() && this->DrivingRulerNodeID.compare(ruler->GetID()) == 0)
+  bool bOldState = this->ResliceButton->blockSignals(true);
+  this->ResliceButton->setChecked(0);
+  this->ResliceSlider->setEnabled(0);
+  this->ReslicePerpendicularRadioButton->setEnabled(0);
+  this->ResliceInPlaneRadioButton->setEnabled(0);
+  
+  if (!this->DrivingRulerNodeID.empty())
     {
-    this->ResliceButton->setStyleSheet("background-color:#00CCFF");
+    this->ResliceButton->setText(this->DrivingRulerNodeName.c_str());
+    if (this->DrivingRulerNodeID.compare(ruler->GetID()) == 0)
+      {
+      this->ResliceButton->setChecked(1);
+      this->ResliceSlider->setEnabled(1);
+      this->ReslicePerpendicularRadioButton->setEnabled(1);
+      this->ResliceInPlaneRadioButton->setEnabled(1);
+      }
     }
-  else
-    {
-    this->ResliceButton->setStyleSheet("");
-    }
+  this->ResliceButton->blockSignals(bOldState);
 
   // Update slider
   bool oldState = this->ResliceSlider->blockSignals(true);
   this->ResliceSlider->setMinimum(sliderMinimum);
   this->ResliceSlider->setMaximum(sliderMaximum);
-  this->ResliceSlider->blockSignals(oldState);
   this->ResliceSlider->setValue(sliderValue);
+  this->ResliceSlider->blockSignals(oldState);
 
   // Update labels
   this->DistanceAngleLabel->setText(distanceLabel);
   this->DistanceAngleUnitLabel->setText(unitsLabel);
-
+  if (this->ReslicePerpendicular)
+    {
+    QString decimalValue;
+    double distanceValue = ruler->GetDistanceMeasurement() * this->ReslicePosition / 100;
+    decimalValue = decimalValue.setNum(distanceValue, 'f', 2);
+    this->ResliceValueLabel->setText(decimalValue);
+    }
+  else
+    {
+    this->ResliceValueLabel->setNum(this->ResliceAngle);
+    }
+  
   // Update radio buttons
+  bool test = this->ReslicePerpendicularRadioButton->blockSignals(true);
+  bool test2 = this->ResliceInPlaneRadioButton->blockSignals(true);
+
   this->ReslicePerpendicularRadioButton->setChecked(this->ReslicePerpendicular);
   this->ResliceInPlaneRadioButton->setChecked(!this->ReslicePerpendicular);
+  
+  this->ReslicePerpendicularRadioButton->blockSignals(test);
+  this->ResliceInPlaneRadioButton->blockSignals(test2);
 
   // Update slice intersection visibility
   if (rulerDisplayNode && this->ResliceButton->isChecked())
     {
     rulerDisplayNode->SetSliceIntersectionVisibility(this->ReslicePerpendicular);
     }
-  
 }
 
 //-----------------------------------------------------------------------------
 qSlicerPathXplorerReslicingWidget
 ::qSlicerPathXplorerReslicingWidget(vtkMRMLSliceNode* sliceNode, QWidget *parentWidget)
-  : Superclass ( new qSlicerPathXplorerReslicingWidgetPrivate(*this), parentWidget)
+  : Superclass (parentWidget)
+    , d_ptr ( new qSlicerPathXplorerReslicingWidgetPrivate(*this) )
 {
   Q_D(qSlicerPathXplorerReslicingWidget);
+  d->setupUi(this);
 
   if (!sliceNode)
     {
     return;
     }
 
-  d->init();
   this->setEnabled(0);
   d->SliceNode = sliceNode;
 
   // Set text
-  d->ViewLabel->setText(sliceNode->GetLayoutLabel());
   d->ResliceButton->setText(sliceNode->GetName());
 
   // Set color
   double color[3];
   sliceNode->GetLayoutColor(color);
-  d->setColor(QColor::fromRgbF(color[0],color[1],color[2]));
+  std::stringstream buttonBgColor;
+  buttonBgColor << "QPushButton { background-color: rgba("
+		<< color[0]*255 << ","
+		<< color[1]*255 << ","
+		<< color[2]*255 << ");}";
+  d->ResliceButton->setStyleSheet(buttonBgColor.str().c_str());
 
   connect(d->ResliceButton, SIGNAL(toggled(bool)),
 	  this, SLOT(onResliceToggled(bool)));
@@ -309,10 +310,6 @@ void qSlicerPathXplorerReslicingWidget
 
   // Disable everything except button
   this->setEnabled(1);
-  d->ResliceButton->setChecked(false);
-  d->ResliceSlider->setEnabled(0);
-  d->ReslicePerpendicularRadioButton->setEnabled(0);
-  d->ResliceInPlaneRadioButton->setEnabled(0);
   
   if (!d->SliceNode || !item)
     {

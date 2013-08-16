@@ -876,7 +876,6 @@ addNewReslicer(vtkMRMLSliceNode* sliceNode)
       new qSlicerPathXplorerReslicingWidget(sliceNode, d->CollapsibleButton);
     if (reslicer)
       {
-      reslicer->setLayoutBehavior( qMRMLViewControllerBar::Panel );
       d->ReslicingWidgetLayout->addWidget(reslicer);
       d->reslicerList.push_back(reslicer);
       }
