@@ -1,15 +1,14 @@
 cmake_minimum_required(VERSION 2.8.7)
 
 #-----------------------------------------------------------------------------
-#if(NOT Slicer_SOURCE_DIR)
-#  set(EXTENSION_NAME PathXplorer)
-#  set(EXTENSION_HOMEPAGE "http://www.slicer.org/slicerWiki/index.php/Documentation/4.2/Extensions/PathXplorer")
-#  set(EXTENSION_CATEGORY "IGT")
-#  set(EXTENSION_CONTRIBUTORS "Atsushi Yamada (BWH)")
-#  set(EXTENSION_DESCRIPTION "This is an example of extension bundling a loadable module")
-#  set(EXTENSION_ICONURL "http://viewvc.slicer.org/viewvc.cgi/Slicer4/trunk/Extensions/Testing/PathXplorer/Resources/Icons/PathXplorer.png?revision=19437&view=co")
-#  set(EXTENSION_SCREENSHOTURLS "http://wiki.slicer.org/slicerWiki/images/4/42/Slicer-r19441-PathXplorer-screenshot.png")
-#endif()
+if(NOT Slicer_SOURCE_DIR)
+  set(EXTENSION_NAME PathXplorer)
+  set(EXTENSION_HOMEPAGE "http://www.slicer.org/slicerWiki/index.php/Documentation/Nightly/Extensions/PathXplorer")
+  set(EXTENSION_CATEGORY "IGT")
+  set(EXTENSION_CONTRIBUTORS "Laurent Chauvin (BWH), Junichi Tokuda (BWH), Atsushi Yamada (BWH)")
+  set(EXTENSION_DESCRIPTION "The module allows you to quickly define several paths and reslice along these trajectories")
+  set(EXTENSION_SCREENSHOTURLS "http://www.slicer.org/slicerWiki/images/c/c5/PathXplorer_Planning.png")
+endif()
 
 #-----------------------------------------------------------------------------
 set(MODULE_NAME PathXplorer)
