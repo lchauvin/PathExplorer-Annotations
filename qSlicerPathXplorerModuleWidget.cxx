@@ -521,6 +521,11 @@ deleteTrajectory(int trajectoryRow)
 {
   Q_D(qSlicerPathXplorerModuleWidget);
 
+  if (!this->mrmlScene())
+    {
+    return;
+    }
+
   // Remove ruler from scene
   qSlicerPathXplorerTrajectoryItem* itemToRemove =
     dynamic_cast<qSlicerPathXplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(trajectoryRow,0));
@@ -962,7 +967,8 @@ onTrajectoryCellChanged(int row, int column)
 {
   Q_D(qSlicerPathXplorerModuleWidget);
 
-  if (!d->TrajectoryTableWidget || !d->selectedTrajectoryNode)
+  if (!d->TrajectoryTableWidget || !d->selectedTrajectoryNode ||
+      !this->mrmlScene())
     {
     return;
     }

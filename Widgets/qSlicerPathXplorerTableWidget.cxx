@@ -181,7 +181,7 @@ void qSlicerPathXplorerTableWidget
 	vtkMRMLSelectionNode *snode = mrmlAppLogic->GetSelectionNode();
 	if (snode)
 	  {
-	  snode->SetActiveAnnotationID ("vtkMRMLAnnotationFiducialNode");
+	  snode->SetActivePlaceNodeClassName ("vtkMRMLAnnotationFiducialNode");
 	  }
 	}
       }
@@ -204,6 +204,11 @@ void qSlicerPathXplorerTableWidget
 {
   Q_D(qSlicerPathXplorerTableWidget);
 
+  if (!d->annotationLogic->GetMRMLScene())
+    {
+    return;
+    }
+
   int selectedRow = d->TableWidget->currentRow();
   if (selectedRow < 0)
     {
@@ -217,21 +222,20 @@ void qSlicerPathXplorerTableWidget
   if (itemToRemove)
     {
     vtkMRMLAnnotationFiducialNode* nodeToDelete = itemToRemove->getFiducialNode();
-    
+
+    // ISSUE: removeRow first change the selection to +or- 1 row
+    // Which trigger the SLOT onSelectionChanged with the new row selected
+    // If fiducial node has been removed before, then it crashes
+    // As removeRow also delete items, itemToRemove is no longer accessible
+    // after removeRow.
+    // FIX: Get fiducial node before calling removeRow, then call removeRow
+    // then delete fiducial
+    d->TableWidget->removeRow(selectedRow);
+
     if (nodeToDelete)
       {
       // Signal to remove all trajectories with this fiducial
-      emit itemDeleted(nodeToDelete);
-      
-      // ISSUE: removeRow first change the selection to +or- 1 row
-      // Which trigger the SLOT onSelectionChanged with the new row selected
-      // If fiducial node has been removed before, then it crashes
-      // As removeRow also delete items, itemToRemove is no longer accessible
-      // after removeRow.
-      // FIX: Get fiducial node before calling removeRow, then call removeRow
-      // then delete fiducial
-      d->TableWidget->removeRow(selectedRow);
-      
+      emit itemDeleted(nodeToDelete);      
       d->annotationLogic->GetMRMLScene()->RemoveNode(nodeToDelete);
       }
     }
