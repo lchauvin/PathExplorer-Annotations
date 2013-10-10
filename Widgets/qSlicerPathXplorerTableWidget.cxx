@@ -1,9 +1,9 @@
 /*==============================================================================
 
   Program: 3D Slicer
- 
+
   Portions (c) Copyright Brigham and Women's Hospital (BWH) All Rights Reserved.
- 
+
   See COPYRIGHT.txt
   or http://www.slicer.org/copyright/copyright.txt for details.
 
@@ -12,13 +12,13 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
- 
+
   This file was originally developed by Laurent Chauvin, Brigham and Women's
   Hospital. The project was supported by grants 5P01CA067165,
   5R01CA124377, 5R01CA138586, 2R44DE019322, 7R01CA124377,
   5R42CA137886, 8P41EB015898
- 
-==============================================================================*/
+
+  ==============================================================================*/
 
 // PathXplorer Widgets includes
 #include "qSlicerPathXplorerTableWidget.h"
@@ -82,27 +82,27 @@ qSlicerPathXplorerTableWidget
     , d_ptr( new qSlicerPathXplorerTableWidgetPrivate(*this) )
 {
   Q_D(qSlicerPathXplorerTableWidget);
-  d->setupUi(this);  
+  d->setupUi(this);
 
   qSlicerAbstractCoreModule* annotationModule =
     qSlicerCoreApplication::application()->moduleManager()->module("Annotations");
   if (annotationModule)
     {
-    d->annotationLogic = 
+    d->annotationLogic =
       vtkSlicerAnnotationModuleLogic::SafeDownCast(annotationModule->logic());
     }
 
   connect(d->AddButton, SIGNAL(toggled(bool)),
-	  this, SLOT(onAddButtonToggled(bool)));
+          this, SLOT(onAddButtonToggled(bool)));
 
   connect(d->DeleteButton, SIGNAL(clicked()),
-	  this, SLOT(onDeleteButtonClicked()));
+          this, SLOT(onDeleteButtonClicked()));
 
   connect(d->ClearButton, SIGNAL(clicked()),
-	  this, SLOT(onClearButtonClicked()));
+          this, SLOT(onClearButtonClicked()));
 
   connect(d->TableWidget, SIGNAL(itemSelectionChanged()),
-	  this, SLOT(onSelectionChanged()));
+          this, SLOT(onSelectionChanged()));
 
   connect(d->TableWidget, SIGNAL(cellChanged(int,int)),
           this, SLOT(onCellChanged(int,int)));
@@ -170,24 +170,24 @@ void qSlicerPathXplorerTableWidget
       {
       d->annotationLogic->SetActiveHierarchyNodeID(d->selectedHierarchyNode->GetID());
       }
-    
+
     // Set fiducial as annotation to drop in selection node
     vtkMRMLApplicationLogic *mrmlAppLogic = d->annotationLogic->GetMRMLApplicationLogic();
     if (mrmlAppLogic)
       {
       vtkMRMLInteractionNode *inode = mrmlAppLogic->GetInteractionNode();
       if (inode)
-	{
-	vtkMRMLSelectionNode *snode = mrmlAppLogic->GetSelectionNode();
-	if (snode)
-	  {
-	  snode->SetActivePlaceNodeClassName ("vtkMRMLAnnotationFiducialNode");
-	  }
-	}
+        {
+        vtkMRMLSelectionNode *snode = mrmlAppLogic->GetSelectionNode();
+        if (snode)
+          {
+          snode->SetActivePlaceNodeClassName ("vtkMRMLAnnotationFiducialNode");
+          }
+        }
       }
-    
+
     // Place fiducial (persistent)
-    d->annotationLogic->StartPlaceMode(true);  
+    d->annotationLogic->StartPlaceMode(true);
     }
   else
     {
@@ -235,7 +235,7 @@ void qSlicerPathXplorerTableWidget
     if (nodeToDelete)
       {
       // Signal to remove all trajectories with this fiducial
-      emit itemDeleted(nodeToDelete);      
+      emit itemDeleted(nodeToDelete);
       d->annotationLogic->GetMRMLScene()->RemoveNode(nodeToDelete);
       }
     }
@@ -283,7 +283,7 @@ void qSlicerPathXplorerTableWidget
   vtkMRMLAnnotationFiducialNode* selectedFiducial =
     selectedItem->getFiducialNode();
 
-  if (!selectedFiducial || 
+  if (!selectedFiducial ||
       !selectedFiducial->GetAnnotationPointDisplayNode())
     {
     return;
@@ -298,19 +298,19 @@ void qSlicerPathXplorerTableWidget
     if (i != selectedRow)
       {
       qSlicerPathXplorerFiducialItem* currentItem =
-	dynamic_cast<qSlicerPathXplorerFiducialItem*>(d->TableWidget->item(i,0));
+        dynamic_cast<qSlicerPathXplorerFiducialItem*>(d->TableWidget->item(i,0));
       if (currentItem)
-	{
-	vtkMRMLAnnotationFiducialNode* currentFiducial =
-	  currentItem->getFiducialNode();
-	if (currentFiducial)
-	  {
-	  if (currentFiducial->GetAnnotationPointDisplayNode())
-	    {
-	    currentFiducial->GetAnnotationPointDisplayNode()->SetOpacity(0.3);
-	    }
-	  }
-	}
+        {
+        vtkMRMLAnnotationFiducialNode* currentFiducial =
+          currentItem->getFiducialNode();
+        if (currentFiducial)
+          {
+          if (currentFiducial->GetAnnotationPointDisplayNode())
+            {
+            currentFiducial->GetAnnotationPointDisplayNode()->SetOpacity(0.3);
+            }
+          }
+        }
       }
     }
 }
@@ -336,7 +336,7 @@ void qSlicerPathXplorerTableWidget
     {
     return;
     }
-  
+
   // Get coordinates
   QString xCoord = QString(d->TableWidget->item(row, 1)->text());
   QString yCoord = QString(d->TableWidget->item(row, 2)->text());

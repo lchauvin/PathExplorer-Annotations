@@ -31,8 +31,6 @@ set(${KIT}_UI_SRCS
   )
 
 set(${KIT}_RESOURCES
-  ../Resources/UI/qSlicer${MODULE_NAME}TableWidget.ui
-  ../Resources/UI/qSlicer${MODULE_NAME}ReslicingWidget.ui
   )
 
 set(${KIT}_TARGET_LIBRARIES

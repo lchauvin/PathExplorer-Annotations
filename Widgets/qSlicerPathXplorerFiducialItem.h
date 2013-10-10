@@ -36,6 +36,7 @@
 
 // MRML includes
 #include "vtkMRMLAnnotationFiducialNode.h"
+#include "vtkMRMLAnnotationPointDisplayNode.h"
 
 // VTK includes
 #include <ctkVTKObject.h>

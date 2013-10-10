@@ -1,9 +1,9 @@
 /*==============================================================================
 
   Program: 3D Slicer
- 
+
   Portions (c) Copyright Brigham and Women's Hospital (BWH) All Rights Reserved.
- 
+
   See COPYRIGHT.txt
   or http://www.slicer.org/copyright/copyright.txt for details.
 
@@ -12,13 +12,13 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
- 
+
   This file was originally developed by Laurent Chauvin, Brigham and Women's
   Hospital. The project was supported by grants 5P01CA067165,
   5R01CA124377, 5R01CA138586, 2R44DE019322, 7R01CA124377,
   5R42CA137886, 8P41EB015898
 
-==============================================================================*/
+  ==============================================================================*/
 
 // SlicerQt includes
 #include "qSlicerPathXplorerFiducialItem.h"
@@ -43,7 +43,7 @@ setFiducialNode(vtkMRMLAnnotationFiducialNode* fiducialNode)
   if (fiducialNode)
     {
     qvtkReconnect(this->FiducialNode, fiducialNode, vtkCommand::ModifiedEvent,
-		  this, SLOT(updateItem()));
+                  this, SLOT(updateItem()));
     this->FiducialNode = fiducialNode;
     this->updateItem();
     }
@@ -93,7 +93,7 @@ updateItem()
   // Name
   QString pointName = tableWidget->item(itemRow,0)->text();
   QString fiducialName(this->FiducialNode->GetName());
-  
+
   if (pointName.isEmpty())
     {
     // No name set. Use fiducial name.
@@ -114,17 +114,17 @@ updateItem()
   bool oldState = tableWidget->blockSignals(true);
 
   //   R
-  fiduPos << targetPosition[0];  
+  fiduPos << targetPosition[0];
   tableWidget->item(itemRow, 1)->setText(fiduPos.str().c_str());
   fiduPos.str(std::string());
-  
+
   //   A
-  fiduPos << targetPosition[1];  
+  fiduPos << targetPosition[1];
   tableWidget->item(itemRow, 2)->setText(fiduPos.str().c_str());
   fiduPos.str(std::string());
-  
+
   //   S
-  fiduPos << targetPosition[2];  
+  fiduPos << targetPosition[2];
   tableWidget->item(itemRow, 3)->setText(fiduPos.str().c_str());
   fiduPos.str(std::string());
 

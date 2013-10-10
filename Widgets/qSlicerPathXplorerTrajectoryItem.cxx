@@ -1,9 +1,9 @@
 /*==============================================================================
 
   Program: 3D Slicer
- 
+
   Portions (c) Copyright Brigham and Women's Hospital (BWH) All Rights Reserved.
- 
+
   See COPYRIGHT.txt
   or http://www.slicer.org/copyright/copyright.txt for details.
 
@@ -12,13 +12,13 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
- 
+
   This file was originally developed by Laurent Chauvin, Brigham and Women's
   Hospital. The project was supported by grants 5P01CA067165,
   5R01CA124377, 5R01CA138586, 2R44DE019322, 7R01CA124377,
   5R42CA137886, 8P41EB015898
 
-==============================================================================*/ 
+  ==============================================================================*/
 
 // SlicerQt includes
 #include "qSlicerApplication.h"
@@ -50,7 +50,7 @@ qSlicerPathXplorerTrajectoryItem
   this->DisplayPath = true;
   this->DisplayEntry = true;
   this->DisplayTarget = true;
-  
+
   // Projection
   this->ProjectionPath = false;
   this->ProjectionEntry = false;
@@ -138,7 +138,7 @@ updateItem()
     {
     return;
     }
-  
+
   if (!this->Trajectory)
     {
     // Points are set but trajectory doesn't exist yet. Create a new one.
@@ -157,7 +157,7 @@ updateItem()
 
   this->Trajectory->SetPositionWorldCoordinates1(entryPosition);
   this->Trajectory->SetPositionWorldCoordinates2(targetPosition);
-  
+
   // Update table widget
   double itemRow = this->row();
   QTableWidget* tableWidget = this->tableWidget();
@@ -185,16 +185,16 @@ updateItem()
     }
 
   // -- Update entry cell
-  tableWidget->item(itemRow,1)->setText(this->EntryPoint->GetName()); 
-  
+  tableWidget->item(itemRow,1)->setText(this->EntryPoint->GetName());
+
   // -- Update target cell
-  tableWidget->item(itemRow,2)->setText(this->TargetPoint->GetName()); 
+  tableWidget->item(itemRow,2)->setText(this->TargetPoint->GetName());
 
   // Update fiducials when ruler is moved to keep them linked
   qvtkConnect(this->Trajectory, vtkCommand::ModifiedEvent,
-	      this, SLOT(trajectoryModified()));
+              this, SLOT(trajectoryModified()));
   qvtkConnect(this->Trajectory, vtkMRMLDisplayableNode::DisplayModifiedEvent,
-	      this, SLOT(trajectoryDisplayModified()));
+              this, SLOT(trajectoryDisplayModified()));
 }
 
 // --------------------------------------------------------------------------
@@ -214,7 +214,7 @@ trajectoryModified()
   this->Trajectory->GetPositionWorldCoordinates2(targetPos);
 
   this->TargetPoint->SetFiducialWorldCoordinates(targetPos);
-  this->EntryPoint->SetFiducialWorldCoordinates(entryPos);  
+  this->EntryPoint->SetFiducialWorldCoordinates(entryPos);
 }
 
 // --------------------------------------------------------------------------
