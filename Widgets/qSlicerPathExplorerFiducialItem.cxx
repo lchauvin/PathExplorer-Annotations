@@ -21,23 +21,23 @@
   ==============================================================================*/
 
 // SlicerQt includes
-#include "qSlicerPathXplorerFiducialItem.h"
+#include "qSlicerPathExplorerFiducialItem.h"
 
 // --------------------------------------------------------------------------
-qSlicerPathXplorerFiducialItem
-::qSlicerPathXplorerFiducialItem() : QTableWidgetItem()
+qSlicerPathExplorerFiducialItem
+::qSlicerPathExplorerFiducialItem() : QTableWidgetItem()
 {
   this->FiducialNode = NULL;
 }
 
 // --------------------------------------------------------------------------
-qSlicerPathXplorerFiducialItem::
-~qSlicerPathXplorerFiducialItem()
+qSlicerPathExplorerFiducialItem::
+~qSlicerPathExplorerFiducialItem()
 {
 }
 
 // --------------------------------------------------------------------------
-void qSlicerPathXplorerFiducialItem::
+void qSlicerPathExplorerFiducialItem::
 setFiducialNode(vtkMRMLAnnotationFiducialNode* fiducialNode)
 {
   if (fiducialNode)
@@ -50,14 +50,14 @@ setFiducialNode(vtkMRMLAnnotationFiducialNode* fiducialNode)
 }
 
 // --------------------------------------------------------------------------
-vtkMRMLAnnotationFiducialNode* qSlicerPathXplorerFiducialItem::
+vtkMRMLAnnotationFiducialNode* qSlicerPathExplorerFiducialItem::
 getFiducialNode()
 {
   return this->FiducialNode;
 }
 
 // --------------------------------------------------------------------------
-void qSlicerPathXplorerFiducialItem::
+void qSlicerPathExplorerFiducialItem::
 updateItem()
 {
   if (!this->FiducialNode)

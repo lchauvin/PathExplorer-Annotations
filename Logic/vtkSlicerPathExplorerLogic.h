@@ -20,14 +20,14 @@
  
 ==============================================================================*/
 
-// .NAME vtkSlicerPathXplorerLogic - slicer logic class for volumes manipulation
+// .NAME vtkSlicerPathExplorerLogic - slicer logic class for volumes manipulation
 // .SECTION Description
 // This class manages the logic associated with reading, saving,
 // and changing propertied of the volumes
 
 
-#ifndef __vtkSlicerPathXplorerLogic_h
-#define __vtkSlicerPathXplorerLogic_h
+#ifndef __vtkSlicerPathExplorerLogic_h
+#define __vtkSlicerPathExplorerLogic_h
 
 // Slicer includes
 #include "vtkSlicerModuleLogic.h"
@@ -37,22 +37,22 @@
 // STD includes
 #include <cstdlib>
 
-#include "vtkSlicerPathXplorerModuleLogicExport.h"
+#include "vtkSlicerPathExplorerModuleLogicExport.h"
 
 
 /// \ingroup Slicer_QtModules_ExtensionTemplate
-class VTK_SLICER_PATHXPLORER_MODULE_LOGIC_EXPORT vtkSlicerPathXplorerLogic :
+class VTK_SLICER_PATHEXPLORER_MODULE_LOGIC_EXPORT vtkSlicerPathExplorerLogic :
   public vtkSlicerModuleLogic
 {
 public:
 
-  static vtkSlicerPathXplorerLogic *New();
-  vtkTypeMacro(vtkSlicerPathXplorerLogic, vtkSlicerModuleLogic);
+  static vtkSlicerPathExplorerLogic *New();
+  vtkTypeMacro(vtkSlicerPathExplorerLogic, vtkSlicerModuleLogic);
   void PrintSelf(ostream& os, vtkIndent indent);
 
 protected:
-  vtkSlicerPathXplorerLogic();
-  virtual ~vtkSlicerPathXplorerLogic();
+  vtkSlicerPathExplorerLogic();
+  virtual ~vtkSlicerPathExplorerLogic();
 
   virtual void SetMRMLSceneInternal(vtkMRMLScene* newScene);
   /// Register MRML Node classes to Scene. Gets called automatically when the MRMLScene is attached to this logic class.
@@ -62,8 +62,8 @@ protected:
   virtual void OnMRMLSceneNodeRemoved(vtkMRMLNode* node);
 private:
 
-  vtkSlicerPathXplorerLogic(const vtkSlicerPathXplorerLogic&); // Not implemented
-  void operator=(const vtkSlicerPathXplorerLogic&);               // Not implemented
+  vtkSlicerPathExplorerLogic(const vtkSlicerPathExplorerLogic&); // Not implemented
+  void operator=(const vtkSlicerPathExplorerLogic&);               // Not implemented
 };
 
 #endif

@@ -2,16 +2,16 @@ cmake_minimum_required(VERSION 2.8.7)
 
 #-----------------------------------------------------------------------------
 if(NOT Slicer_SOURCE_DIR)
-  set(EXTENSION_NAME PathXplorer)
-  set(EXTENSION_HOMEPAGE "http://www.slicer.org/slicerWiki/index.php/Documentation/Nightly/Extensions/PathXplorer")
+  set(EXTENSION_NAME PathExplorer)
+  set(EXTENSION_HOMEPAGE "http://www.slicer.org/slicerWiki/index.php/Documentation/Nightly/Extensions/PathExplorer")
   set(EXTENSION_CATEGORY "IGT")
   set(EXTENSION_CONTRIBUTORS "Laurent Chauvin (BWH), Junichi Tokuda (BWH), Atsushi Yamada (BWH)")
   set(EXTENSION_DESCRIPTION "The module allows you to quickly define several paths and reslice along these trajectories")
-  set(EXTENSION_SCREENSHOTURLS "http://www.slicer.org/slicerWiki/images/c/c5/PathXplorer_Planning.png")
+  set(EXTENSION_SCREENSHOTURLS "http://www.slicer.org/slicerWiki/images/c/c5/PathExplorer_Planning.png")
 endif()
 
 #-----------------------------------------------------------------------------
-set(MODULE_NAME PathXplorer)
+set(MODULE_NAME PathExplorer)
 set(MODULE_TITLE ${MODULE_NAME})
 
 string(TOUPPER ${MODULE_NAME} MODULE_NAME_UPPER)

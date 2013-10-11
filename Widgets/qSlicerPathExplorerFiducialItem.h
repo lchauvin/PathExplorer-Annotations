@@ -20,10 +20,10 @@
  
 ==============================================================================*/
 
-#ifndef __qSlicerPathXplorerFiducialItem_h
-#define __qSlicerPathXplorerFiducialItem_h
+#ifndef __qSlicerPathExplorerFiducialItem_h
+#define __qSlicerPathExplorerFiducialItem_h
 
-#include "qSlicerPathXplorerModuleWidgetsExport.h"
+#include "qSlicerPathExplorerModuleWidgetsExport.h"
 
 // Standards
 #include <sstream>
@@ -41,14 +41,14 @@
 // VTK includes
 #include <ctkVTKObject.h>
 
-class Q_SLICER_MODULE_PATHXPLORER_WIDGETS_EXPORT qSlicerPathXplorerFiducialItem
+class Q_SLICER_MODULE_PATHEXPLORER_WIDGETS_EXPORT qSlicerPathExplorerFiducialItem
   : public QObject, public QTableWidgetItem
 {
   Q_OBJECT
   QVTK_OBJECT
  public:
-    qSlicerPathXplorerFiducialItem();
-  ~qSlicerPathXplorerFiducialItem();
+    qSlicerPathExplorerFiducialItem();
+  ~qSlicerPathExplorerFiducialItem();
   
   // MRML Nodes
   void setFiducialNode(vtkMRMLAnnotationFiducialNode* fiducialNode);

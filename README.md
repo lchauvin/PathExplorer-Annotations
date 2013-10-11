@@ -1,4 +1,4 @@
-PathXplorer
+PathExplorer
 ===========
 
 Needle path planning module

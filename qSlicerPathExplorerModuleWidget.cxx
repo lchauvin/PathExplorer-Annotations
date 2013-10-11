@@ -24,8 +24,8 @@
 #include <QDebug>
 
 // SlicerQt includes
-#include "qSlicerPathXplorerModuleWidget.h"
-#include "ui_qSlicerPathXplorerModuleWidget.h"
+#include "qSlicerPathExplorerModuleWidget.h"
+#include "ui_qSlicerPathExplorerModuleWidget.h"
 
 // Annotation logic
 #include "vtkSlicerAnnotationModuleLogic.h"
@@ -34,9 +34,9 @@
 #include "qSlicerAbstractCoreModule.h"
 #include "qSlicerCoreApplication.h"
 #include "qSlicerModuleManager.h"
-#include "qSlicerPathXplorerFiducialItem.h"
-#include "qSlicerPathXplorerTrajectoryItem.h"
-#include "qSlicerPathXplorerReslicingWidget.h"
+#include "qSlicerPathExplorerFiducialItem.h"
+#include "qSlicerPathExplorerTrajectoryItem.h"
+#include "qSlicerPathExplorerReslicingWidget.h"
 
 // MRML
 #include "vtkMRMLAnnotationFiducialNode.h"
@@ -48,24 +48,24 @@
 
 //-----------------------------------------------------------------------------
 /// \ingroup Slicer_QtModules_ExtensionTemplate
-class qSlicerPathXplorerModuleWidgetPrivate: public Ui_qSlicerPathXplorerModuleWidget
+class qSlicerPathExplorerModuleWidgetPrivate: public Ui_qSlicerPathExplorerModuleWidget
 {
 public:
-  qSlicerPathXplorerModuleWidgetPrivate();
+  qSlicerPathExplorerModuleWidgetPrivate();
 
   vtkMRMLPathPlannerTrajectoryNode *selectedTrajectoryNode;
   double targetTableWidgetItemColor[3];
   double entryTableWidgetItemColor[3];
-  typedef std::vector<qSlicerPathXplorerReslicingWidget*> ReslicerVector;
+  typedef std::vector<qSlicerPathExplorerReslicingWidget*> ReslicerVector;
   ReslicerVector reslicerList;
 };
 
 //-----------------------------------------------------------------------------
-// qSlicerPathXplorerModuleWidgetPrivate methods
+// qSlicerPathExplorerModuleWidgetPrivate methods
 
 //-----------------------------------------------------------------------------
-qSlicerPathXplorerModuleWidgetPrivate::
-qSlicerPathXplorerModuleWidgetPrivate()
+qSlicerPathExplorerModuleWidgetPrivate::
+qSlicerPathExplorerModuleWidgetPrivate()
 {
   this->selectedTrajectoryNode = NULL;
 
@@ -79,27 +79,27 @@ qSlicerPathXplorerModuleWidgetPrivate()
 }
 
 //-----------------------------------------------------------------------------
-// qSlicerPathXplorerModuleWidget methods
+// qSlicerPathExplorerModuleWidget methods
 
 //-----------------------------------------------------------------------------
-qSlicerPathXplorerModuleWidget::
-qSlicerPathXplorerModuleWidget(QWidget* _parent)
+qSlicerPathExplorerModuleWidget::
+qSlicerPathExplorerModuleWidget(QWidget* _parent)
   : Superclass( _parent )
-    , d_ptr( new qSlicerPathXplorerModuleWidgetPrivate )
+    , d_ptr( new qSlicerPathExplorerModuleWidgetPrivate )
 {
 }
 
 //-----------------------------------------------------------------------------
-qSlicerPathXplorerModuleWidget::
-~qSlicerPathXplorerModuleWidget()
+qSlicerPathExplorerModuleWidget::
+~qSlicerPathExplorerModuleWidget()
 {
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 setup()
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
   d->setupUi(this);
   this->Superclass::setup();
 
@@ -175,10 +175,10 @@ setup()
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 onEntryListNodeChanged(vtkMRMLNode* newList)
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   if (!newList || !d->EntryPointWidget)
     {
@@ -212,10 +212,10 @@ onEntryListNodeChanged(vtkMRMLNode* newList)
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 onTargetListNodeChanged(vtkMRMLNode* newList)
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   if (!newList || !d->TargetPointWidget)
     {
@@ -249,10 +249,10 @@ onTargetListNodeChanged(vtkMRMLNode* newList)
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 addNewFiducialItem(QTableWidget* tableWidget, vtkMRMLAnnotationFiducialNode* fiducialNode)
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   if (!tableWidget || !fiducialNode)
     {
@@ -290,8 +290,8 @@ addNewFiducialItem(QTableWidget* tableWidget, vtkMRMLAnnotationFiducialNode* fid
   tableWidget->insertRow(numberOfItems);
 
   // Add row
-  qSlicerPathXplorerFiducialItem* newItem =
-    new qSlicerPathXplorerFiducialItem();
+  qSlicerPathExplorerFiducialItem* newItem =
+    new qSlicerPathExplorerFiducialItem();
   tableWidget->setItem(numberOfItems, 0, newItem);
   tableWidget->setItem(numberOfItems, 1, new QTableWidgetItem());
   tableWidget->setItem(numberOfItems, 2, new QTableWidgetItem());
@@ -315,7 +315,7 @@ addNewFiducialItem(QTableWidget* tableWidget, vtkMRMLAnnotationFiducialNode* fid
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 onItemChanged(QTableWidgetItem *item)
 {
   if (!item)
@@ -323,8 +323,8 @@ onItemChanged(QTableWidgetItem *item)
     return;
     }
 
-  qSlicerPathXplorerFiducialItem *itemChanged
-    = dynamic_cast<qSlicerPathXplorerFiducialItem*>(item);
+  qSlicerPathExplorerFiducialItem *itemChanged
+    = dynamic_cast<qSlicerPathExplorerFiducialItem*>(item);
 
   if (!itemChanged)
     {
@@ -335,10 +335,10 @@ onItemChanged(QTableWidgetItem *item)
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 refreshEntryView()
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   vtkMRMLAnnotationHierarchyNode* entryList =
     d->EntryPointWidget->selectedHierarchyNode();
@@ -369,10 +369,10 @@ refreshEntryView()
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 refreshTargetView()
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   vtkMRMLAnnotationHierarchyNode* targetList =
     d->TargetPointWidget->selectedHierarchyNode();
@@ -403,10 +403,10 @@ refreshTargetView()
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 onTrajectoryListNodeChanged(vtkMRMLNode* newList)
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   if (!newList)
     {
@@ -433,10 +433,10 @@ onTrajectoryListNodeChanged(vtkMRMLNode* newList)
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 onAddButtonClicked()
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   if (!d->EntryPointWidget || !d->TargetPointWidget ||
       !d->TrajectoryTableWidget)
@@ -457,8 +457,8 @@ onAddButtonClicked()
     return;
     }
 
-  qSlicerPathXplorerFiducialItem* targetItem
-    = dynamic_cast<qSlicerPathXplorerFiducialItem*>(d->TargetPointWidget->getTableWidget()->item(targetRow, 0));
+  qSlicerPathExplorerFiducialItem* targetItem
+    = dynamic_cast<qSlicerPathExplorerFiducialItem*>(d->TargetPointWidget->getTableWidget()->item(targetRow, 0));
   if (!targetItem)
     {
     return;
@@ -478,8 +478,8 @@ onAddButtonClicked()
     return;
     }
 
-  qSlicerPathXplorerFiducialItem* entryItem
-    = dynamic_cast<qSlicerPathXplorerFiducialItem*>(d->EntryPointWidget->getTableWidget()->item(entryRow, 0));
+  qSlicerPathExplorerFiducialItem* entryItem
+    = dynamic_cast<qSlicerPathExplorerFiducialItem*>(d->EntryPointWidget->getTableWidget()->item(entryRow, 0));
   if (!entryItem)
     {
     return;
@@ -501,10 +501,10 @@ onAddButtonClicked()
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 onDeleteButtonClicked()
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   int selectedRow = d->TrajectoryTableWidget->currentRow();
   if (selectedRow < 0)
@@ -516,10 +516,10 @@ onDeleteButtonClicked()
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 deleteTrajectory(int trajectoryRow)
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   if (!this->mrmlScene())
     {
@@ -527,8 +527,8 @@ deleteTrajectory(int trajectoryRow)
     }
 
   // Remove ruler from scene
-  qSlicerPathXplorerTrajectoryItem* itemToRemove =
-    dynamic_cast<qSlicerPathXplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(trajectoryRow,0));
+  qSlicerPathExplorerTrajectoryItem* itemToRemove =
+    dynamic_cast<qSlicerPathExplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(trajectoryRow,0));
   if (itemToRemove)
     {
     this->mrmlScene()->RemoveNode(itemToRemove->trajectoryNode());
@@ -551,10 +551,10 @@ deleteTrajectory(int trajectoryRow)
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 onUpdateButtonClicked()
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   if (!d->TrajectoryTableWidget)
     {
@@ -589,12 +589,12 @@ onUpdateButtonClicked()
     }
 
   // Get items
-  qSlicerPathXplorerFiducialItem *targetItem =
-    dynamic_cast<qSlicerPathXplorerFiducialItem*>(targetTable->item(targetRow,0));
-  qSlicerPathXplorerFiducialItem *entryItem =
-    dynamic_cast<qSlicerPathXplorerFiducialItem*>(entryTable->item(entryRow,0));
-  qSlicerPathXplorerTrajectoryItem *trajectoryItem =
-    dynamic_cast<qSlicerPathXplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(trajectoryRow,0));
+  qSlicerPathExplorerFiducialItem *targetItem =
+    dynamic_cast<qSlicerPathExplorerFiducialItem*>(targetTable->item(targetRow,0));
+  qSlicerPathExplorerFiducialItem *entryItem =
+    dynamic_cast<qSlicerPathExplorerFiducialItem*>(entryTable->item(entryRow,0));
+  qSlicerPathExplorerTrajectoryItem *trajectoryItem =
+    dynamic_cast<qSlicerPathExplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(trajectoryRow,0));
 
   if (!targetItem ||
       !entryItem ||
@@ -623,10 +623,10 @@ onUpdateButtonClicked()
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 onClearButtonClicked()
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   if (!d->selectedTrajectoryNode)
     {
@@ -641,10 +641,10 @@ onClearButtonClicked()
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 addNewRulerItem(vtkMRMLAnnotationFiducialNode* entryPoint, vtkMRMLAnnotationFiducialNode* targetPoint)
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   if (!entryPoint || !targetPoint)
     {
@@ -661,8 +661,8 @@ addNewRulerItem(vtkMRMLAnnotationFiducialNode* entryPoint, vtkMRMLAnnotationFidu
   // Check ruler not already existing
   for (int i = 0; i < rowCount; i++)
     {
-    qSlicerPathXplorerTrajectoryItem* currentItem =
-      dynamic_cast<qSlicerPathXplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(i,0));
+    qSlicerPathExplorerTrajectoryItem* currentItem =
+      dynamic_cast<qSlicerPathExplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(i,0));
     if (currentItem)
       {
       if (currentItem->entryPoint() == entryPoint)
@@ -698,7 +698,7 @@ addNewRulerItem(vtkMRMLAnnotationFiducialNode* entryPoint, vtkMRMLAnnotationFidu
   QTableWidgetItem* checkboxItem = new QTableWidgetItem();
   checkboxItem->setCheckState(Qt::Checked);
 
-  qSlicerPathXplorerTrajectoryItem* newTrajectory = new qSlicerPathXplorerTrajectoryItem();
+  qSlicerPathExplorerTrajectoryItem* newTrajectory = new qSlicerPathExplorerTrajectoryItem();
   d->TrajectoryTableWidget->setItem(rowCount, 0, newTrajectory);
   d->TrajectoryTableWidget->setItem(rowCount, 1, new QTableWidgetItem());
   d->TrajectoryTableWidget->setItem(rowCount, 2, new QTableWidgetItem());
@@ -721,10 +721,10 @@ addNewRulerItem(vtkMRMLAnnotationFiducialNode* entryPoint, vtkMRMLAnnotationFidu
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 onTrajectorySelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
   Q_UNUSED(deselected);
   Q_UNUSED(selected);
 
@@ -738,8 +738,8 @@ onTrajectorySelectionChanged(const QItemSelection& selected, const QItemSelectio
   int row = d->TrajectoryTableWidget->currentRow();
 
   //  Get item selected
-  qSlicerPathXplorerTrajectoryItem* selectedTrajectory
-    = dynamic_cast<qSlicerPathXplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(row,0));
+  qSlicerPathExplorerTrajectoryItem* selectedTrajectory
+    = dynamic_cast<qSlicerPathExplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(row,0));
   if (!selectedTrajectory)
     {
     return;
@@ -752,8 +752,8 @@ onTrajectorySelectionChanged(const QItemSelection& selected, const QItemSelectio
     {
     for (int i = 0; i < d->TargetPointWidget->getTableWidget()->rowCount(); i++)
       {
-      qSlicerPathXplorerFiducialItem* currentFiducial =
-        dynamic_cast<qSlicerPathXplorerFiducialItem*>(d->TargetPointWidget->getTableWidget()->item(i,0));
+      qSlicerPathExplorerFiducialItem* currentFiducial =
+        dynamic_cast<qSlicerPathExplorerFiducialItem*>(d->TargetPointWidget->getTableWidget()->item(i,0));
       if (currentFiducial)
         {
         if (currentFiducial->getFiducialNode() == targetFiducial)
@@ -773,8 +773,8 @@ onTrajectorySelectionChanged(const QItemSelection& selected, const QItemSelectio
     {
     for (int i = 0; i < d->EntryPointWidget->getTableWidget()->rowCount(); i++)
       {
-      qSlicerPathXplorerFiducialItem* currentFiducial =
-        dynamic_cast<qSlicerPathXplorerFiducialItem*>(d->EntryPointWidget->getTableWidget()->item(i,0));
+      qSlicerPathExplorerFiducialItem* currentFiducial =
+        dynamic_cast<qSlicerPathExplorerFiducialItem*>(d->EntryPointWidget->getTableWidget()->item(i,0));
       if (currentFiducial)
         {
         if (currentFiducial->getFiducialNode() == entryFiducial)
@@ -788,10 +788,10 @@ onTrajectorySelectionChanged(const QItemSelection& selected, const QItemSelectio
     }
 
   // Set trajectory items to all reslicer widgets
-  for (qSlicerPathXplorerModuleWidgetPrivate::ReslicerVector::iterator it = d->reslicerList.begin();
+  for (qSlicerPathExplorerModuleWidgetPrivate::ReslicerVector::iterator it = d->reslicerList.begin();
        it != d->reslicerList.end(); ++it)
     {
-    qSlicerPathXplorerReslicingWidget* currentReslicer
+    qSlicerPathExplorerReslicingWidget* currentReslicer
       = *it;
     if (currentReslicer)
       {
@@ -802,10 +802,10 @@ onTrajectorySelectionChanged(const QItemSelection& selected, const QItemSelectio
 
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 onMRMLSceneChanged(vtkMRMLScene* newScene)
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   if (!d->TargetPointListNodeSelector ||
       !d->EntryPointListNodeSelector ||
@@ -870,15 +870,15 @@ onMRMLSceneChanged(vtkMRMLScene* newScene)
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 addNewReslicer(vtkMRMLSliceNode* sliceNode)
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   if (sliceNode)
     {
-    qSlicerPathXplorerReslicingWidget* reslicer =
-      new qSlicerPathXplorerReslicingWidget(sliceNode, d->CollapsibleButton);
+    qSlicerPathExplorerReslicingWidget* reslicer =
+      new qSlicerPathExplorerReslicingWidget(sliceNode, d->CollapsibleButton);
     if (reslicer)
       {
       d->ReslicingWidgetLayout->addWidget(reslicer);
@@ -888,10 +888,10 @@ addNewReslicer(vtkMRMLSliceNode* sliceNode)
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 onTargetSelectionChanged()
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   if (!d->TargetPointWidget->getTableWidget() ||
       !d->TrajectoryTableWidget)
@@ -904,10 +904,10 @@ onTargetSelectionChanged()
   int trajectoryRow = d->TrajectoryTableWidget->currentRow();
 
   // Get nodes
-  qSlicerPathXplorerFiducialItem* targetItem =
-    dynamic_cast<qSlicerPathXplorerFiducialItem*>(d->TargetPointWidget->getTableWidget()->item(targetRow,0));
-  qSlicerPathXplorerTrajectoryItem* trajectoryItem =
-    dynamic_cast<qSlicerPathXplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(trajectoryRow,0));
+  qSlicerPathExplorerFiducialItem* targetItem =
+    dynamic_cast<qSlicerPathExplorerFiducialItem*>(d->TargetPointWidget->getTableWidget()->item(targetRow,0));
+  qSlicerPathExplorerTrajectoryItem* trajectoryItem =
+    dynamic_cast<qSlicerPathExplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(trajectoryRow,0));
 
   if (targetItem && trajectoryItem)
     {
@@ -925,10 +925,10 @@ onTargetSelectionChanged()
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 onEntrySelectionChanged()
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   if (!d->EntryPointWidget->getTableWidget() ||
       !d->TrajectoryTableWidget)
@@ -941,10 +941,10 @@ onEntrySelectionChanged()
   int trajectoryRow = d->TrajectoryTableWidget->currentRow();
 
   // Get nodes
-  qSlicerPathXplorerFiducialItem* entryItem =
-    dynamic_cast<qSlicerPathXplorerFiducialItem*>(d->EntryPointWidget->getTableWidget()->item(entryRow,0));
-  qSlicerPathXplorerTrajectoryItem* trajectoryItem =
-    dynamic_cast<qSlicerPathXplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(trajectoryRow,0));
+  qSlicerPathExplorerFiducialItem* entryItem =
+    dynamic_cast<qSlicerPathExplorerFiducialItem*>(d->EntryPointWidget->getTableWidget()->item(entryRow,0));
+  qSlicerPathExplorerTrajectoryItem* trajectoryItem =
+    dynamic_cast<qSlicerPathExplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(trajectoryRow,0));
 
   if (entryItem && trajectoryItem)
     {
@@ -962,10 +962,10 @@ onEntrySelectionChanged()
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 onTrajectoryCellChanged(int row, int column)
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   if (!d->TrajectoryTableWidget || !d->selectedTrajectoryNode ||
       !this->mrmlScene())
@@ -977,8 +977,8 @@ onTrajectoryCellChanged(int row, int column)
   if (column == 0)
     {
     // Get item
-    qSlicerPathXplorerTrajectoryItem* currentItem =
-      dynamic_cast<qSlicerPathXplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(row,0));
+    qSlicerPathExplorerTrajectoryItem* currentItem =
+      dynamic_cast<qSlicerPathExplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(row,0));
     if (!currentItem)
       {
       return;
@@ -1029,8 +1029,8 @@ onTrajectoryCellChanged(int row, int column)
   // -- Trajectory visibility changed
   else if (column == 3)
     {
-    qSlicerPathXplorerTrajectoryItem* currentItem =
-      dynamic_cast<qSlicerPathXplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(row,0));
+    qSlicerPathExplorerTrajectoryItem* currentItem =
+      dynamic_cast<qSlicerPathExplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(row,0));
     if (!currentItem)
       {
       return;
@@ -1042,10 +1042,10 @@ onTrajectoryCellChanged(int row, int column)
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 onEntryPointDeleted(vtkMRMLAnnotationFiducialNode* itemDeleted)
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   if (!d->TrajectoryTableWidget)
     {
@@ -1061,8 +1061,8 @@ onEntryPointDeleted(vtkMRMLAnnotationFiducialNode* itemDeleted)
   int row = 0;
   while(row < d->TrajectoryTableWidget->rowCount())
     {
-    qSlicerPathXplorerTrajectoryItem* currentItem =
-      dynamic_cast<qSlicerPathXplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(row,0));
+    qSlicerPathExplorerTrajectoryItem* currentItem =
+      dynamic_cast<qSlicerPathExplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(row,0));
     if (currentItem)
       {
       if (currentItem->entryPoint() == itemDeleted)
@@ -1081,10 +1081,10 @@ onEntryPointDeleted(vtkMRMLAnnotationFiducialNode* itemDeleted)
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 onTargetPointDeleted(vtkMRMLAnnotationFiducialNode* itemDeleted)
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   if (!d->TrajectoryTableWidget)
     {
@@ -1100,8 +1100,8 @@ onTargetPointDeleted(vtkMRMLAnnotationFiducialNode* itemDeleted)
   int row = 0;
   while(row < d->TrajectoryTableWidget->rowCount())
     {
-    qSlicerPathXplorerTrajectoryItem* currentItem =
-      dynamic_cast<qSlicerPathXplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(row,0));
+    qSlicerPathExplorerTrajectoryItem* currentItem =
+      dynamic_cast<qSlicerPathExplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(row,0));
     if (currentItem)
       {
       if (currentItem->targetPoint() == itemDeleted)
@@ -1120,10 +1120,10 @@ onTargetPointDeleted(vtkMRMLAnnotationFiducialNode* itemDeleted)
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 onEntryDisplayModified(vtkMRMLAnnotationFiducialNode* modifiedNode, bool visibility)
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   if (!d->TrajectoryTableWidget)
     {
@@ -1133,8 +1133,8 @@ onEntryDisplayModified(vtkMRMLAnnotationFiducialNode* modifiedNode, bool visibil
   int row = 0;
   while(row < d->TrajectoryTableWidget->rowCount())
     {
-    qSlicerPathXplorerTrajectoryItem* currentItem =
-      dynamic_cast<qSlicerPathXplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(row,0));
+    qSlicerPathExplorerTrajectoryItem* currentItem =
+      dynamic_cast<qSlicerPathExplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(row,0));
     if (currentItem)
       {
       if (currentItem->entryPoint() == modifiedNode)
@@ -1147,10 +1147,10 @@ onEntryDisplayModified(vtkMRMLAnnotationFiducialNode* modifiedNode, bool visibil
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 onTargetDisplayModified(vtkMRMLAnnotationFiducialNode* modifiedNode, bool visibility)
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   if (!d->TrajectoryTableWidget)
     {
@@ -1160,8 +1160,8 @@ onTargetDisplayModified(vtkMRMLAnnotationFiducialNode* modifiedNode, bool visibi
   int row = 0;
   while(row < d->TrajectoryTableWidget->rowCount())
     {
-    qSlicerPathXplorerTrajectoryItem* currentItem =
-      dynamic_cast<qSlicerPathXplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(row,0));
+    qSlicerPathExplorerTrajectoryItem* currentItem =
+      dynamic_cast<qSlicerPathExplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(row,0));
     if (currentItem)
       {
       if (currentItem->targetPoint() == modifiedNode)
@@ -1174,10 +1174,10 @@ onTargetDisplayModified(vtkMRMLAnnotationFiducialNode* modifiedNode, bool visibi
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 onEntryProjectionModified(vtkMRMLAnnotationFiducialNode* modifiedNode, bool projection)
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   if (!d->TrajectoryTableWidget)
     {
@@ -1187,8 +1187,8 @@ onEntryProjectionModified(vtkMRMLAnnotationFiducialNode* modifiedNode, bool proj
   int row = 0;
   while(row < d->TrajectoryTableWidget->rowCount())
     {
-    qSlicerPathXplorerTrajectoryItem* currentItem =
-      dynamic_cast<qSlicerPathXplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(row,0));
+    qSlicerPathExplorerTrajectoryItem* currentItem =
+      dynamic_cast<qSlicerPathExplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(row,0));
     if (currentItem)
       {
       if (currentItem->entryPoint() == modifiedNode)
@@ -1201,10 +1201,10 @@ onEntryProjectionModified(vtkMRMLAnnotationFiducialNode* modifiedNode, bool proj
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 onTargetProjectionModified(vtkMRMLAnnotationFiducialNode* modifiedNode, bool projection)
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
 
   if (!d->TrajectoryTableWidget)
     {
@@ -1214,8 +1214,8 @@ onTargetProjectionModified(vtkMRMLAnnotationFiducialNode* modifiedNode, bool pro
   int row = 0;
   while(row < d->TrajectoryTableWidget->rowCount())
     {
-    qSlicerPathXplorerTrajectoryItem* currentItem =
-      dynamic_cast<qSlicerPathXplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(row,0));
+    qSlicerPathExplorerTrajectoryItem* currentItem =
+      dynamic_cast<qSlicerPathExplorerTrajectoryItem*>(d->TrajectoryTableWidget->item(row,0));
     if (currentItem)
       {
       if (currentItem->targetPoint() == modifiedNode)
@@ -1228,10 +1228,10 @@ onTargetProjectionModified(vtkMRMLAnnotationFiducialNode* modifiedNode, bool pro
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 onEntryTableWidgetAddButtonToggled(bool state)
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
   Q_UNUSED(state);
 
   // Check if target button is also toggled
@@ -1243,10 +1243,10 @@ onEntryTableWidgetAddButtonToggled(bool state)
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModuleWidget::
+void qSlicerPathExplorerModuleWidget::
 onTargetTableWidgetAddButtonToggled(bool state)
 {
-  Q_D(qSlicerPathXplorerModuleWidget);
+  Q_D(qSlicerPathExplorerModuleWidget);
   Q_UNUSED(state);
 
   // Check if target button is also toggled

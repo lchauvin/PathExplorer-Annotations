@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>qSlicerPathXplorerModuleWidget</class>
- <widget class="qSlicerWidget" name="qSlicerPathXplorerModuleWidget">
+ <class>qSlicerPathExplorerModuleWidget</class>
+ <widget class="qSlicerWidget" name="qSlicerPathExplorerModuleWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>qSlicerPathXplorerModuleWidget</string>
+   <string>qSlicerPathExplorerModuleWidget</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -27,7 +27,7 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="qSlicerPathXplorerTableWidget" name="TargetPointWidget" native="true"/>
+          <widget class="qSlicerPathExplorerTableWidget" name="TargetPointWidget" native="true"/>
          </item>
         </layout>
        </widget>
@@ -42,7 +42,7 @@
         </property>
         <layout class="QVBoxLayout">
          <item>
-          <widget class="qSlicerPathXplorerTableWidget" name="EntryPointWidget" native="true"/>
+          <widget class="qSlicerPathExplorerTableWidget" name="EntryPointWidget" native="true"/>
          </item>
         </layout>
        </widget>
@@ -191,7 +191,7 @@
            </stringlist>
           </property>
           <property name="baseName">
-           <string>PathXplorerTargetListNode</string>
+           <string>PathExplorerTargetListNode</string>
           </property>
           <property name="renameEnabled">
            <bool>true</bool>
@@ -225,7 +225,7 @@
            </stringlist>
           </property>
           <property name="baseName">
-           <string>PathXplorerEntryListNode</string>
+           <string>PathExplorerEntryListNode</string>
           </property>
           <property name="renameEnabled">
            <bool>true</bool>
@@ -277,9 +277,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>qSlicerPathXplorerTableWidget</class>
+   <class>qSlicerPathExplorerTableWidget</class>
    <extends>QWidget</extends>
-   <header>qSlicerPathXplorerTableWidget.h</header>
+   <header>qSlicerPathExplorerTableWidget.h</header>
    <container>1</container>
    <slots>
     <slot>setMRMLScene(vtkMRMLScene*)</slot>
@@ -289,7 +289,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>qSlicerPathXplorerModuleWidget</sender>
+   <sender>qSlicerPathExplorerModuleWidget</sender>
    <signal>mrmlSceneChanged(vtkMRMLScene*)</signal>
    <receiver>EntryPointWidget</receiver>
    <slot>setMRMLScene(vtkMRMLScene*)</slot>
@@ -305,7 +305,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>qSlicerPathXplorerModuleWidget</sender>
+   <sender>qSlicerPathExplorerModuleWidget</sender>
    <signal>mrmlSceneChanged(vtkMRMLScene*)</signal>
    <receiver>TargetPointWidget</receiver>
    <slot>setMRMLScene(vtkMRMLScene*)</slot>
@@ -321,7 +321,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>qSlicerPathXplorerModuleWidget</sender>
+   <sender>qSlicerPathExplorerModuleWidget</sender>
    <signal>mrmlSceneChanged(vtkMRMLScene*)</signal>
    <receiver>EntryPointListNodeSelector</receiver>
    <slot>setMRMLScene(vtkMRMLScene*)</slot>
@@ -337,7 +337,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>qSlicerPathXplorerModuleWidget</sender>
+   <sender>qSlicerPathExplorerModuleWidget</sender>
    <signal>mrmlSceneChanged(vtkMRMLScene*)</signal>
    <receiver>TargetPointListNodeSelector</receiver>
    <slot>setMRMLScene(vtkMRMLScene*)</slot>
@@ -353,7 +353,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>qSlicerPathXplorerModuleWidget</sender>
+   <sender>qSlicerPathExplorerModuleWidget</sender>
    <signal>mrmlSceneChanged(vtkMRMLScene*)</signal>
    <receiver>TrajectoryListNodeSelector</receiver>
    <slot>setMRMLScene(vtkMRMLScene*)</slot>

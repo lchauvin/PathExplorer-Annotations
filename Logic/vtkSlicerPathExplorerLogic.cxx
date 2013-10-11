@@ -20,8 +20,8 @@
  
 ==============================================================================*/
 
-// PathXplorer Logic includes
-#include "vtkSlicerPathXplorerLogic.h"
+// PathExplorer Logic includes
+#include "vtkSlicerPathExplorerLogic.h"
 
 // MRML includes
 #include "vtkMRMLPathPlannerTrajectoryNode.h"
@@ -33,26 +33,26 @@
 #include <cassert>
 
 //----------------------------------------------------------------------------
-vtkStandardNewMacro(vtkSlicerPathXplorerLogic);
+vtkStandardNewMacro(vtkSlicerPathExplorerLogic);
 
 //----------------------------------------------------------------------------
-vtkSlicerPathXplorerLogic::vtkSlicerPathXplorerLogic()
+vtkSlicerPathExplorerLogic::vtkSlicerPathExplorerLogic()
 {
 }
 
 //----------------------------------------------------------------------------
-vtkSlicerPathXplorerLogic::~vtkSlicerPathXplorerLogic()
+vtkSlicerPathExplorerLogic::~vtkSlicerPathExplorerLogic()
 {
 }
 
 //----------------------------------------------------------------------------
-void vtkSlicerPathXplorerLogic::PrintSelf(ostream& os, vtkIndent indent)
+void vtkSlicerPathExplorerLogic::PrintSelf(ostream& os, vtkIndent indent)
 {
   this->Superclass::PrintSelf(os, indent);
 }
 
 //---------------------------------------------------------------------------
-void vtkSlicerPathXplorerLogic::SetMRMLSceneInternal(vtkMRMLScene * newScene)
+void vtkSlicerPathExplorerLogic::SetMRMLSceneInternal(vtkMRMLScene * newScene)
 {
   vtkNew<vtkIntArray> events;
   events->InsertNextValue(vtkMRMLScene::NodeAddedEvent);
@@ -62,7 +62,7 @@ void vtkSlicerPathXplorerLogic::SetMRMLSceneInternal(vtkMRMLScene * newScene)
 }
 
 //-----------------------------------------------------------------------------
-void vtkSlicerPathXplorerLogic::RegisterNodes()
+void vtkSlicerPathExplorerLogic::RegisterNodes()
 {
   assert(this->GetMRMLScene() != 0);
 
@@ -73,19 +73,19 @@ void vtkSlicerPathXplorerLogic::RegisterNodes()
 }
 
 //---------------------------------------------------------------------------
-void vtkSlicerPathXplorerLogic::UpdateFromMRMLScene()
+void vtkSlicerPathExplorerLogic::UpdateFromMRMLScene()
 {
   assert(this->GetMRMLScene() != 0);
 }
 
 //---------------------------------------------------------------------------
-void vtkSlicerPathXplorerLogic
+void vtkSlicerPathExplorerLogic
 ::OnMRMLSceneNodeAdded(vtkMRMLNode* vtkNotUsed(node))
 {
 }
 
 //---------------------------------------------------------------------------
-void vtkSlicerPathXplorerLogic
+void vtkSlicerPathExplorerLogic
 ::OnMRMLSceneNodeRemoved(vtkMRMLNode* vtkNotUsed(node))
 {
 }

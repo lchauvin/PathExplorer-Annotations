@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>qSlicerPathXplorerPanelWidget</class>
- <widget class="QWidget" name="qSlicerPathXplorerPanelWidget">
+ <class>qSlicerPathExplorerPanelWidget</class>
+ <widget class="QWidget" name="qSlicerPathExplorerPanelWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -18,7 +18,7 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QVBoxLayout" name="PathXplorerSettingLayout">
+    <layout class="QVBoxLayout" name="PathExplorerSettingLayout">
      <item>
       <widget class="QToolBox" name="toolBox">
        <property name="enabled">

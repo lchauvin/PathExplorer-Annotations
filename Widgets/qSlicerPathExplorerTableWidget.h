@@ -20,26 +20,26 @@
  
 ==============================================================================*/
 
-#ifndef __qSlicerPathXplorerTableWidget_h
-#define __qSlicerPathXplorerTableWidget_h
+#ifndef __qSlicerPathExplorerTableWidget_h
+#define __qSlicerPathExplorerTableWidget_h
 
 // VTK includes
 #include <ctkVTKObject.h>
 
 // SlicerQt includes
-#include "qSlicerPathXplorerModuleWidgetsExport.h"
+#include "qSlicerPathExplorerModuleWidgetsExport.h"
 #include "qSlicerWidget.h"
 
 // Qt includes
 #include <QTableWidget>
 
-class qSlicerPathXplorerTableWidgetPrivate;
+class qSlicerPathExplorerTableWidgetPrivate;
 class vtkMRMLNode;
 class vtkMRMLScene;
 class vtkMRMLAnnotationHierarchyNode;
 class vtkMRMLAnnotationFiducialNode;
 
-class Q_SLICER_MODULE_PATHXPLORER_WIDGETS_EXPORT qSlicerPathXplorerTableWidget
+class Q_SLICER_MODULE_PATHEXPLORER_WIDGETS_EXPORT qSlicerPathExplorerTableWidget
   : public qSlicerWidget
 {
   Q_OBJECT
@@ -47,8 +47,8 @@ class Q_SLICER_MODULE_PATHXPLORER_WIDGETS_EXPORT qSlicerPathXplorerTableWidget
 
 public:
   typedef qSlicerWidget Superclass;
-  qSlicerPathXplorerTableWidget(QWidget *parent=0);
-  virtual ~qSlicerPathXplorerTableWidget();
+  qSlicerPathExplorerTableWidget(QWidget *parent=0);
+  virtual ~qSlicerPathExplorerTableWidget();
 
   QTableWidget* getTableWidget();
   void setSelectedHierarchyNode(vtkMRMLAnnotationHierarchyNode* selectedNode);
@@ -64,15 +64,15 @@ public slots:
   void onCellChanged(int row, int column);
 
 protected:
-  QScopedPointer<qSlicerPathXplorerTableWidgetPrivate> d_ptr;
+  QScopedPointer<qSlicerPathExplorerTableWidgetPrivate> d_ptr;
   
 private:
-  Q_DECLARE_PRIVATE(qSlicerPathXplorerTableWidget);
-  Q_DISABLE_COPY(qSlicerPathXplorerTableWidget);
+  Q_DECLARE_PRIVATE(qSlicerPathExplorerTableWidget);
+  Q_DISABLE_COPY(qSlicerPathExplorerTableWidget);
 
 signals:
   void itemDeleted(vtkMRMLAnnotationFiducialNode*);
   void addButtonToggled(bool);
 };
 
-#endif // __qSlicerPathXplorerTableWidget_h
+#endif // __qSlicerPathExplorerTableWidget_h
