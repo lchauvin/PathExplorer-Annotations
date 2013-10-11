@@ -20,24 +20,24 @@
 
   ==============================================================================*/
 
-#ifndef __qSlicerPathXplorerReslicingWidget_h
-#define __qSlicerPathXplorerReslicingWidget_h
+#ifndef __qSlicerPathExplorerReslicingWidget_h
+#define __qSlicerPathExplorerReslicingWidget_h
 
 // VTK includes
 #include <ctkVTKObject.h>
 
 // SlicerQt includes
-#include "qSlicerPathXplorerModuleWidgetsExport.h"
+#include "qSlicerPathExplorerModuleWidgetsExport.h"
 #include "qSlicerWidget.h"
 
-class qSlicerPathXplorerReslicingWidgetPrivate;
-class qSlicerPathXplorerTrajectoryItem;
+class qSlicerPathExplorerReslicingWidgetPrivate;
+class qSlicerPathExplorerTrajectoryItem;
 class vtkMRMLNode;
 class vtkMRMLScene;
 class vtkMRMLSliceNode;
 class vtkMRMLAnnotationRulerNode;
 
-class Q_SLICER_MODULE_PATHXPLORER_WIDGETS_EXPORT qSlicerPathXplorerReslicingWidget
+class Q_SLICER_MODULE_PATHEXPLORER_WIDGETS_EXPORT qSlicerPathExplorerReslicingWidget
 : public qSlicerWidget
 {
   Q_OBJECT
@@ -46,11 +46,11 @@ class Q_SLICER_MODULE_PATHXPLORER_WIDGETS_EXPORT qSlicerPathXplorerReslicingWidg
  public:
   typedef qSlicerWidget Superclass;
 
-  qSlicerPathXplorerReslicingWidget(vtkMRMLSliceNode* sliceNode, QWidget *parent=0);
-  virtual ~qSlicerPathXplorerReslicingWidget();
+  qSlicerPathExplorerReslicingWidget(vtkMRMLSliceNode* sliceNode, QWidget *parent=0);
+  virtual ~qSlicerPathExplorerReslicingWidget();
 
  public slots:
-  void setTrajectoryItem(qSlicerPathXplorerTrajectoryItem* item);
+  void setTrajectoryItem(qSlicerPathExplorerTrajectoryItem* item);
   void onResliceToggled(bool buttonStatus);
   void onPerpendicularToggled(bool status);
   void onResliceValueChanged(int resliceValue);
@@ -60,11 +60,11 @@ class Q_SLICER_MODULE_PATHXPLORER_WIDGETS_EXPORT qSlicerPathXplorerReslicingWidg
                         double resliceValue);
 
  protected:
-  QScopedPointer<qSlicerPathXplorerReslicingWidgetPrivate> d_ptr;
+  QScopedPointer<qSlicerPathExplorerReslicingWidgetPrivate> d_ptr;
 
  private:
-  Q_DECLARE_PRIVATE(qSlicerPathXplorerReslicingWidget);
-  Q_DISABLE_COPY(qSlicerPathXplorerReslicingWidget);
+  Q_DECLARE_PRIVATE(qSlicerPathExplorerReslicingWidget);
+  Q_DISABLE_COPY(qSlicerPathExplorerReslicingWidget);
 };
 
-#endif // __qSlicerPathXplorerReslicingWidget_h
+#endif // __qSlicerPathExplorerReslicingWidget_h

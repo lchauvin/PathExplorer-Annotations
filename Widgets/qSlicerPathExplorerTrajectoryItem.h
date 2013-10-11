@@ -20,10 +20,10 @@
 
   ==============================================================================*/
 
-#ifndef __qSlicerPathXplorerTrajectoryItem_h
-#define __qSlicerPathXplorerTrajectoryItem_h
+#ifndef __qSlicerPathExplorerTrajectoryItem_h
+#define __qSlicerPathExplorerTrajectoryItem_h
 
-#include "qSlicerPathXplorerModuleWidgetsExport.h"
+#include "qSlicerPathExplorerModuleWidgetsExport.h"
 
 // Standards
 #include <sstream>
@@ -39,15 +39,15 @@
 class vtkMRMLAnnotationFiducialNode;
 class vtkMRMLAnnotationRulerNode;
 
-class Q_SLICER_MODULE_PATHXPLORER_WIDGETS_EXPORT qSlicerPathXplorerTrajectoryItem
+class Q_SLICER_MODULE_PATHEXPLORER_WIDGETS_EXPORT qSlicerPathExplorerTrajectoryItem
 : public QObject, public QTableWidgetItem
 {
   Q_OBJECT
   QVTK_OBJECT
 
 public:
-    qSlicerPathXplorerTrajectoryItem();
-  ~qSlicerPathXplorerTrajectoryItem();
+    qSlicerPathExplorerTrajectoryItem();
+  ~qSlicerPathExplorerTrajectoryItem();
 
   // Set/Get for Trajectory/Fiducials
   void setEntryPoint(vtkMRMLAnnotationFiducialNode* entryPoint);
@@ -117,7 +117,7 @@ signals:
 };
 
 // --------------------------------------------------------------------------
-void qSlicerPathXplorerTrajectoryItem::
+void qSlicerPathExplorerTrajectoryItem::
 setResliceViewer(const char* viewer)
 {
   if (viewer)
@@ -128,14 +128,14 @@ setResliceViewer(const char* viewer)
 }
 
 //----------------------------------------------------------------------------
-const char* qSlicerPathXplorerTrajectoryItem::
+const char* qSlicerPathExplorerTrajectoryItem::
 getResliceViewer()
 {
   return this->ResliceViewer.c_str();
 }
 
 // --------------------------------------------------------------------------
-void qSlicerPathXplorerTrajectoryItem::
+void qSlicerPathExplorerTrajectoryItem::
 setReslicePerpendicular(bool perp)
 {
   this->ReslicePerpendicular = perp;
@@ -143,14 +143,14 @@ setReslicePerpendicular(bool perp)
 }
 
 //----------------------------------------------------------------------------
-bool qSlicerPathXplorerTrajectoryItem::
+bool qSlicerPathExplorerTrajectoryItem::
 getReslicePerpendicular()
 {
   return this->ReslicePerpendicular;
 }
 
 // --------------------------------------------------------------------------
-void qSlicerPathXplorerTrajectoryItem::
+void qSlicerPathExplorerTrajectoryItem::
 setResliceAngle(double angle)
 {
   if (angle >= -180 && angle <= 180)
@@ -165,14 +165,14 @@ setResliceAngle(double angle)
 }
 
 //----------------------------------------------------------------------------
-double qSlicerPathXplorerTrajectoryItem::
+double qSlicerPathExplorerTrajectoryItem::
 getResliceAngle()
 {
   return this->ResliceAngle;
 }
 
 // --------------------------------------------------------------------------
-void qSlicerPathXplorerTrajectoryItem::
+void qSlicerPathExplorerTrajectoryItem::
 setReslicePosition(double position)
 {
   if (position >= 0 && position <= 100)
@@ -187,14 +187,14 @@ setReslicePosition(double position)
 }
 
 //----------------------------------------------------------------------------
-double qSlicerPathXplorerTrajectoryItem::
+double qSlicerPathExplorerTrajectoryItem::
 getReslicePosition()
 {
   return this->ReslicePosition;
 }
 
 // --------------------------------------------------------------------------
-void qSlicerPathXplorerTrajectoryItem::
+void qSlicerPathExplorerTrajectoryItem::
 setDisplayPath(bool display)
 {
   this->DisplayPath = display;
@@ -202,14 +202,14 @@ setDisplayPath(bool display)
 }
 
 //----------------------------------------------------------------------------
-bool qSlicerPathXplorerTrajectoryItem::
+bool qSlicerPathExplorerTrajectoryItem::
 getDisplayPath()
 {
   return this->DisplayPath;
 }
 
 // --------------------------------------------------------------------------
-void qSlicerPathXplorerTrajectoryItem::
+void qSlicerPathExplorerTrajectoryItem::
 setDisplayEntry(bool display)
 {
   this->DisplayEntry = display;
@@ -217,14 +217,14 @@ setDisplayEntry(bool display)
 }
 
 //----------------------------------------------------------------------------
-bool qSlicerPathXplorerTrajectoryItem::
+bool qSlicerPathExplorerTrajectoryItem::
 getDisplayEntry()
 {
   return this->DisplayEntry;
 }
 
 // --------------------------------------------------------------------------
-void qSlicerPathXplorerTrajectoryItem::
+void qSlicerPathExplorerTrajectoryItem::
 setDisplayTarget(bool display)
 {
   this->DisplayTarget = display;
@@ -232,14 +232,14 @@ setDisplayTarget(bool display)
 }
 
 //----------------------------------------------------------------------------
-bool qSlicerPathXplorerTrajectoryItem::
+bool qSlicerPathExplorerTrajectoryItem::
 getDisplayTarget()
 {
   return this->DisplayTarget;
 }
 
 // --------------------------------------------------------------------------
-void qSlicerPathXplorerTrajectoryItem::
+void qSlicerPathExplorerTrajectoryItem::
 setProjectionPath(bool projection)
 {
   this->ProjectionPath = projection;
@@ -247,14 +247,14 @@ setProjectionPath(bool projection)
 }
 
 //----------------------------------------------------------------------------
-bool qSlicerPathXplorerTrajectoryItem::
+bool qSlicerPathExplorerTrajectoryItem::
 getProjectionPath()
 {
   return this->ProjectionPath;
 }
 
 // --------------------------------------------------------------------------
-void qSlicerPathXplorerTrajectoryItem::
+void qSlicerPathExplorerTrajectoryItem::
 setProjectionEntry(bool projection)
 {
   this->ProjectionEntry = projection;
@@ -262,14 +262,14 @@ setProjectionEntry(bool projection)
 }
 
 //----------------------------------------------------------------------------
-bool qSlicerPathXplorerTrajectoryItem::
+bool qSlicerPathExplorerTrajectoryItem::
 getProjectionEntry()
 {
   return this->ProjectionEntry;
 }
 
 // --------------------------------------------------------------------------
-void qSlicerPathXplorerTrajectoryItem::
+void qSlicerPathExplorerTrajectoryItem::
 setProjectionTarget(bool projection)
 {
   this->ProjectionTarget = projection;
@@ -277,7 +277,7 @@ setProjectionTarget(bool projection)
 }
 
 //----------------------------------------------------------------------------
-bool qSlicerPathXplorerTrajectoryItem::
+bool qSlicerPathExplorerTrajectoryItem::
 getProjectionTarget()
 {
   return this->ProjectionTarget;

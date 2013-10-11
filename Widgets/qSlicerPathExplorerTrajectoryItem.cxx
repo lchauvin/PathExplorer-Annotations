@@ -23,7 +23,7 @@
 // SlicerQt includes
 #include "qSlicerApplication.h"
 #include "qSlicerCoreApplication.h"
-#include "qSlicerPathXplorerTrajectoryItem.h"
+#include "qSlicerPathExplorerTrajectoryItem.h"
 
 // MRML includes
 #include "vtkMRMLAnnotationFiducialNode.h"
@@ -32,8 +32,8 @@
 #include "vtkMRMLScene.h"
 
 // --------------------------------------------------------------------------
-qSlicerPathXplorerTrajectoryItem
-::qSlicerPathXplorerTrajectoryItem() : QTableWidgetItem()
+qSlicerPathExplorerTrajectoryItem
+::qSlicerPathExplorerTrajectoryItem() : QTableWidgetItem()
 {
   // Trajectory/Fiducials
   this->EntryPoint  = NULL;
@@ -58,8 +58,8 @@ qSlicerPathXplorerTrajectoryItem
 }
 
 // --------------------------------------------------------------------------
-qSlicerPathXplorerTrajectoryItem::
-~qSlicerPathXplorerTrajectoryItem()
+qSlicerPathExplorerTrajectoryItem::
+~qSlicerPathExplorerTrajectoryItem()
 {
   if (this->Trajectory)
     {
@@ -68,7 +68,7 @@ qSlicerPathXplorerTrajectoryItem::
 }
 
 // --------------------------------------------------------------------------
-void qSlicerPathXplorerTrajectoryItem::
+void qSlicerPathExplorerTrajectoryItem::
 setEntryPoint(vtkMRMLAnnotationFiducialNode* entryPoint)
 {
   if (entryPoint && entryPoint != this->EntryPoint)
@@ -82,14 +82,14 @@ setEntryPoint(vtkMRMLAnnotationFiducialNode* entryPoint)
 }
 
 // --------------------------------------------------------------------------
-vtkMRMLAnnotationFiducialNode* qSlicerPathXplorerTrajectoryItem::
+vtkMRMLAnnotationFiducialNode* qSlicerPathExplorerTrajectoryItem::
 entryPoint()
 {
   return this->EntryPoint;
 }
 
 // --------------------------------------------------------------------------
-void qSlicerPathXplorerTrajectoryItem::
+void qSlicerPathExplorerTrajectoryItem::
 setTargetPoint(vtkMRMLAnnotationFiducialNode* targetPoint)
 {
   if (targetPoint && targetPoint != this->TargetPoint)
@@ -103,14 +103,14 @@ setTargetPoint(vtkMRMLAnnotationFiducialNode* targetPoint)
 }
 
 // --------------------------------------------------------------------------
-vtkMRMLAnnotationFiducialNode* qSlicerPathXplorerTrajectoryItem::
+vtkMRMLAnnotationFiducialNode* qSlicerPathExplorerTrajectoryItem::
 targetPoint()
 {
   return this->TargetPoint;
 }
 
 // --------------------------------------------------------------------------
-void qSlicerPathXplorerTrajectoryItem::
+void qSlicerPathExplorerTrajectoryItem::
 setTrajectory(vtkMRMLAnnotationRulerNode* trajectory)
 {
   if (trajectory)
@@ -123,7 +123,7 @@ setTrajectory(vtkMRMLAnnotationRulerNode* trajectory)
 }
 
 // --------------------------------------------------------------------------
-vtkMRMLAnnotationRulerNode* qSlicerPathXplorerTrajectoryItem::
+vtkMRMLAnnotationRulerNode* qSlicerPathExplorerTrajectoryItem::
 trajectoryNode()
 {
   return this->Trajectory;
@@ -131,7 +131,7 @@ trajectoryNode()
 
 
 // --------------------------------------------------------------------------
-void qSlicerPathXplorerTrajectoryItem::
+void qSlicerPathExplorerTrajectoryItem::
 updateItem()
 {
   if (!this->EntryPoint || !this->TargetPoint)
@@ -198,7 +198,7 @@ updateItem()
 }
 
 // --------------------------------------------------------------------------
-void qSlicerPathXplorerTrajectoryItem::
+void qSlicerPathExplorerTrajectoryItem::
 trajectoryModified()
 {
   if (!this->EntryPoint || !this->TargetPoint ||
@@ -218,7 +218,7 @@ trajectoryModified()
 }
 
 // --------------------------------------------------------------------------
-void qSlicerPathXplorerTrajectoryItem::
+void qSlicerPathExplorerTrajectoryItem::
 trajectoryDisplayModified()
 {
   if(!this->Trajectory)

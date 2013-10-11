@@ -20,18 +20,18 @@
  
 ==============================================================================*/
 
-#ifndef __qSlicerPathXplorerModule_h
-#define __qSlicerPathXplorerModule_h
+#ifndef __qSlicerPathExplorerModule_h
+#define __qSlicerPathExplorerModule_h
 
 // SlicerQt includes
 #include "qSlicerLoadableModule.h"
-#include "qSlicerPathXplorerModuleExport.h"
+#include "qSlicerPathExplorerModuleExport.h"
 
-class qSlicerPathXplorerModulePrivate;
+class qSlicerPathExplorerModulePrivate;
 
 /// \ingroup Slicer_QtModules_ExtensionTemplate
-class Q_SLICER_QTMODULES_PATHXPLORER_EXPORT
-qSlicerPathXplorerModule
+class Q_SLICER_QTMODULES_PATHEXPLORER_EXPORT
+qSlicerPathExplorerModule
   : public qSlicerLoadableModule
 {
   Q_OBJECT
@@ -40,8 +40,8 @@ qSlicerPathXplorerModule
 public:
 
   typedef qSlicerLoadableModule Superclass;
-  explicit qSlicerPathXplorerModule(QObject *parent=0);
-  virtual ~qSlicerPathXplorerModule();
+  explicit qSlicerPathExplorerModule(QObject *parent=0);
+  virtual ~qSlicerPathExplorerModule();
 
   qSlicerGetTitleMacro(QTMODULE_TITLE);
 
@@ -66,11 +66,11 @@ protected:
   virtual vtkMRMLAbstractLogic* createLogic();
 
 protected:
-  QScopedPointer<qSlicerPathXplorerModulePrivate> d_ptr;
+  QScopedPointer<qSlicerPathExplorerModulePrivate> d_ptr;
 
 private:
-  Q_DECLARE_PRIVATE(qSlicerPathXplorerModule);
-  Q_DISABLE_COPY(qSlicerPathXplorerModule);
+  Q_DECLARE_PRIVATE(qSlicerPathExplorerModule);
+  Q_DISABLE_COPY(qSlicerPathExplorerModule);
 
 };
 

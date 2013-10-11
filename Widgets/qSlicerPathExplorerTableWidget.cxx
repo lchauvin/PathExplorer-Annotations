@@ -20,9 +20,9 @@
 
   ==============================================================================*/
 
-// PathXplorer Widgets includes
-#include "qSlicerPathXplorerTableWidget.h"
-#include "ui_qSlicerPathXplorerTableWidget.h"
+// PathExplorer Widgets includes
+#include "qSlicerPathExplorerTableWidget.h"
+#include "ui_qSlicerPathExplorerTableWidget.h"
 
 // Annotation logic
 #include "vtkSlicerAnnotationModuleLogic.h"
@@ -39,29 +39,29 @@
 #include "qSlicerAbstractCoreModule.h"
 #include "qSlicerCoreApplication.h"
 #include "qSlicerModuleManager.h"
-#include "qSlicerPathXplorerFiducialItem.h"
+#include "qSlicerPathExplorerFiducialItem.h"
 
 //-----------------------------------------------------------------------------
-/// \ingroup Slicer_QtModules_PathXplorer
-class Q_SLICER_MODULE_PATHXPLORER_WIDGETS_EXPORT qSlicerPathXplorerTableWidgetPrivate
-  : public Ui_qSlicerPathXplorerTableWidget
+/// \ingroup Slicer_QtModules_PathExplorer
+class Q_SLICER_MODULE_PATHEXPLORER_WIDGETS_EXPORT qSlicerPathExplorerTableWidgetPrivate
+  : public Ui_qSlicerPathExplorerTableWidget
 {
-  Q_DECLARE_PUBLIC(qSlicerPathXplorerTableWidget);
+  Q_DECLARE_PUBLIC(qSlicerPathExplorerTableWidget);
  protected:
-  qSlicerPathXplorerTableWidget * const q_ptr;
+  qSlicerPathExplorerTableWidget * const q_ptr;
   vtkMRMLAnnotationHierarchyNode* selectedHierarchyNode;
   vtkSlicerAnnotationModuleLogic* annotationLogic;
 
  public:
-  qSlicerPathXplorerTableWidgetPrivate(
-    qSlicerPathXplorerTableWidget& object);
-  virtual void setupUi(qSlicerPathXplorerTableWidget*);
+  qSlicerPathExplorerTableWidgetPrivate(
+    qSlicerPathExplorerTableWidget& object);
+  virtual void setupUi(qSlicerPathExplorerTableWidget*);
 };
 
 //-----------------------------------------------------------------------------
-qSlicerPathXplorerTableWidgetPrivate
-::qSlicerPathXplorerTableWidgetPrivate(
-  qSlicerPathXplorerTableWidget& object)
+qSlicerPathExplorerTableWidgetPrivate
+::qSlicerPathExplorerTableWidgetPrivate(
+  qSlicerPathExplorerTableWidget& object)
   : q_ptr(&object)
 {
   this->selectedHierarchyNode = NULL;
@@ -69,19 +69,19 @@ qSlicerPathXplorerTableWidgetPrivate
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerTableWidgetPrivate
-::setupUi(qSlicerPathXplorerTableWidget* widget)
+void qSlicerPathExplorerTableWidgetPrivate
+::setupUi(qSlicerPathExplorerTableWidget* widget)
 {
-  this->Ui_qSlicerPathXplorerTableWidget::setupUi(widget);
+  this->Ui_qSlicerPathExplorerTableWidget::setupUi(widget);
 }
 
 //-----------------------------------------------------------------------------
-qSlicerPathXplorerTableWidget
-::qSlicerPathXplorerTableWidget(QWidget *parentWidget)
+qSlicerPathExplorerTableWidget
+::qSlicerPathExplorerTableWidget(QWidget *parentWidget)
   : Superclass (parentWidget)
-    , d_ptr( new qSlicerPathXplorerTableWidgetPrivate(*this) )
+    , d_ptr( new qSlicerPathExplorerTableWidgetPrivate(*this) )
 {
-  Q_D(qSlicerPathXplorerTableWidget);
+  Q_D(qSlicerPathExplorerTableWidget);
   d->setupUi(this);
 
   qSlicerAbstractCoreModule* annotationModule =
@@ -111,16 +111,16 @@ qSlicerPathXplorerTableWidget
 }
 
 //-----------------------------------------------------------------------------
-qSlicerPathXplorerTableWidget
-::~qSlicerPathXplorerTableWidget()
+qSlicerPathExplorerTableWidget
+::~qSlicerPathExplorerTableWidget()
 {
 }
 
 //-----------------------------------------------------------------------------
-QTableWidget* qSlicerPathXplorerTableWidget
+QTableWidget* qSlicerPathExplorerTableWidget
 ::getTableWidget()
 {
-  Q_D(qSlicerPathXplorerTableWidget);
+  Q_D(qSlicerPathExplorerTableWidget);
   if (d->TableWidget)
     {
     return d->TableWidget;
@@ -129,10 +129,10 @@ QTableWidget* qSlicerPathXplorerTableWidget
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerTableWidget
+void qSlicerPathExplorerTableWidget
 ::setSelectedHierarchyNode(vtkMRMLAnnotationHierarchyNode* selectedNode)
 {
-  Q_D(qSlicerPathXplorerTableWidget);
+  Q_D(qSlicerPathExplorerTableWidget);
 
   if (!selectedNode)
     {
@@ -143,19 +143,19 @@ void qSlicerPathXplorerTableWidget
 }
 
 //-----------------------------------------------------------------------------
-vtkMRMLAnnotationHierarchyNode* qSlicerPathXplorerTableWidget
+vtkMRMLAnnotationHierarchyNode* qSlicerPathExplorerTableWidget
 ::selectedHierarchyNode()
 {
-  Q_D(qSlicerPathXplorerTableWidget);
+  Q_D(qSlicerPathExplorerTableWidget);
 
   return d->selectedHierarchyNode;
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerTableWidget
+void qSlicerPathExplorerTableWidget
 ::onAddButtonToggled(bool pushed)
 {
-  Q_D(qSlicerPathXplorerTableWidget);
+  Q_D(qSlicerPathExplorerTableWidget);
 
   if (!d->annotationLogic || !d->selectedHierarchyNode)
     {
@@ -181,7 +181,7 @@ void qSlicerPathXplorerTableWidget
         vtkMRMLSelectionNode *snode = mrmlAppLogic->GetSelectionNode();
         if (snode)
           {
-          snode->SetActivePlaceNodeClassName ("vtkMRMLAnnotationFiducialNode");
+	  snode->SetActiveAnnotationID("vtkMRMLAnnotationFiducialNode");
           }
         }
       }
@@ -199,10 +199,10 @@ void qSlicerPathXplorerTableWidget
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerTableWidget
+void qSlicerPathExplorerTableWidget
 ::onDeleteButtonClicked()
 {
-  Q_D(qSlicerPathXplorerTableWidget);
+  Q_D(qSlicerPathExplorerTableWidget);
 
   if (!d->annotationLogic->GetMRMLScene())
     {
@@ -216,8 +216,8 @@ void qSlicerPathXplorerTableWidget
     }
 
   // Remove fiducial from scene
-  qSlicerPathXplorerFiducialItem* itemToRemove =
-    dynamic_cast<qSlicerPathXplorerFiducialItem*>(d->TableWidget->item(selectedRow, 0));
+  qSlicerPathExplorerFiducialItem* itemToRemove =
+    dynamic_cast<qSlicerPathExplorerFiducialItem*>(d->TableWidget->item(selectedRow, 0));
 
   if (itemToRemove)
     {
@@ -242,10 +242,10 @@ void qSlicerPathXplorerTableWidget
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerTableWidget
+void qSlicerPathExplorerTableWidget
 ::onClearButtonClicked()
 {
-  Q_D(qSlicerPathXplorerTableWidget);
+  Q_D(qSlicerPathExplorerTableWidget);
 
   if (!d->selectedHierarchyNode)
     {
@@ -260,10 +260,10 @@ void qSlicerPathXplorerTableWidget
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerTableWidget
+void qSlicerPathExplorerTableWidget
 ::onSelectionChanged()
 {
-  Q_D(qSlicerPathXplorerTableWidget);
+  Q_D(qSlicerPathExplorerTableWidget);
 
   int selectedRow = d->TableWidget->currentRow();
   if (selectedRow < 0)
@@ -272,8 +272,8 @@ void qSlicerPathXplorerTableWidget
     }
 
   // Get fiducial
-  qSlicerPathXplorerFiducialItem* selectedItem =
-    dynamic_cast<qSlicerPathXplorerFiducialItem*>(d->TableWidget->item(selectedRow,0));
+  qSlicerPathExplorerFiducialItem* selectedItem =
+    dynamic_cast<qSlicerPathExplorerFiducialItem*>(d->TableWidget->item(selectedRow,0));
 
   if (!selectedItem)
     {
@@ -297,8 +297,8 @@ void qSlicerPathXplorerTableWidget
     {
     if (i != selectedRow)
       {
-      qSlicerPathXplorerFiducialItem* currentItem =
-        dynamic_cast<qSlicerPathXplorerFiducialItem*>(d->TableWidget->item(i,0));
+      qSlicerPathExplorerFiducialItem* currentItem =
+        dynamic_cast<qSlicerPathExplorerFiducialItem*>(d->TableWidget->item(i,0));
       if (currentItem)
         {
         vtkMRMLAnnotationFiducialNode* currentFiducial =
@@ -316,10 +316,10 @@ void qSlicerPathXplorerTableWidget
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerTableWidget
+void qSlicerPathExplorerTableWidget
 ::onCellChanged(int row, int column)
 {
-  Q_D(qSlicerPathXplorerTableWidget);
+  Q_D(qSlicerPathExplorerTableWidget);
   Q_UNUSED(column);
 
   if (!d->TableWidget->item(row,0) ||
@@ -330,8 +330,8 @@ void qSlicerPathXplorerTableWidget
     return;
     }
 
-  qSlicerPathXplorerFiducialItem* currentItem =
-    dynamic_cast<qSlicerPathXplorerFiducialItem*>(d->TableWidget->item(row,0));
+  qSlicerPathExplorerFiducialItem* currentItem =
+    dynamic_cast<qSlicerPathExplorerFiducialItem*>(d->TableWidget->item(row,0));
   if (!currentItem)
     {
     return;
@@ -365,10 +365,10 @@ void qSlicerPathXplorerTableWidget
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerTableWidget
+void qSlicerPathExplorerTableWidget
 ::setAddButtonState(bool state)
 {
-  Q_D(qSlicerPathXplorerTableWidget);
+  Q_D(qSlicerPathExplorerTableWidget);
 
   bool oldState = d->AddButton->blockSignals(true);
   d->AddButton->setChecked(state ? Qt::Checked : Qt::Unchecked);

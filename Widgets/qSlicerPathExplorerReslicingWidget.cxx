@@ -20,10 +20,10 @@
 
   ==============================================================================*/
 
-// PathXplorer Widgets includes
-#include "qSlicerPathXplorerReslicingWidget.h"
-#include "qSlicerPathXplorerTrajectoryItem.h"
-#include "ui_qSlicerPathXplorerReslicingWidget.h"
+// PathExplorer Widgets includes
+#include "qSlicerPathExplorerReslicingWidget.h"
+#include "qSlicerPathExplorerTrajectoryItem.h"
+#include "ui_qSlicerPathExplorerReslicingWidget.h"
 
 #include <vtkMRMLAnnotationLineDisplayNode.h>
 #include <vtkMRMLAnnotationRulerNode.h>
@@ -36,28 +36,28 @@
 #include "vtkNew.h"
 #include "vtkSmartPointer.h"
 
-class qSlicerPathXplorerReslicingWidget;
+class qSlicerPathExplorerReslicingWidget;
 
 //-----------------------------------------------------------------------------
-/// \ingroup Slicer_QtModules_PathXplorer
-class Q_SLICER_MODULE_PATHXPLORER_WIDGETS_EXPORT qSlicerPathXplorerReslicingWidgetPrivate
-  : public Ui_qSlicerPathXplorerReslicingWidget
+/// \ingroup Slicer_QtModules_PathExplorer
+class Q_SLICER_MODULE_PATHEXPLORER_WIDGETS_EXPORT qSlicerPathExplorerReslicingWidgetPrivate
+  : public Ui_qSlicerPathExplorerReslicingWidget
 {
-  Q_DECLARE_PUBLIC(qSlicerPathXplorerReslicingWidget);
+  Q_DECLARE_PUBLIC(qSlicerPathExplorerReslicingWidget);
 
  public:
-  qSlicerPathXplorerReslicingWidgetPrivate(
-    qSlicerPathXplorerReslicingWidget& object);
-  virtual ~qSlicerPathXplorerReslicingWidgetPrivate();
-  virtual void setupUi(qSlicerPathXplorerReslicingWidget*);
+  qSlicerPathExplorerReslicingWidgetPrivate(
+    qSlicerPathExplorerReslicingWidget& object);
+  virtual ~qSlicerPathExplorerReslicingWidgetPrivate();
+  virtual void setupUi(qSlicerPathExplorerReslicingWidget*);
 
   int loadAttributesFromViewer();
   void saveAttributesToViewer();
   void updateWidget();
 
  protected:
-  qSlicerPathXplorerReslicingWidget * const     q_ptr;
-  qSlicerPathXplorerTrajectoryItem*             TrajectoryItem;
+  qSlicerPathExplorerReslicingWidget * const     q_ptr;
+  qSlicerPathExplorerTrajectoryItem*             TrajectoryItem;
   vtkMRMLSliceNode*                             SliceNode;
   std::string                                   DrivingRulerNodeID;
   std::string                                   DrivingRulerNodeName;
@@ -67,9 +67,9 @@ class Q_SLICER_MODULE_PATHXPLORER_WIDGETS_EXPORT qSlicerPathXplorerReslicingWidg
 };
 
 //-----------------------------------------------------------------------------
-qSlicerPathXplorerReslicingWidgetPrivate
-::qSlicerPathXplorerReslicingWidgetPrivate(
-  qSlicerPathXplorerReslicingWidget& object)
+qSlicerPathExplorerReslicingWidgetPrivate
+::qSlicerPathExplorerReslicingWidgetPrivate(
+  qSlicerPathExplorerReslicingWidget& object)
   : q_ptr(&object)
 {
   this->DrivingRulerNodeID.assign("");
@@ -82,20 +82,20 @@ qSlicerPathXplorerReslicingWidgetPrivate
 }
 
 //-----------------------------------------------------------------------------
-qSlicerPathXplorerReslicingWidgetPrivate
-::~qSlicerPathXplorerReslicingWidgetPrivate()
+qSlicerPathExplorerReslicingWidgetPrivate
+::~qSlicerPathExplorerReslicingWidgetPrivate()
 {
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerReslicingWidgetPrivate
-::setupUi(qSlicerPathXplorerReslicingWidget* widget)
+void qSlicerPathExplorerReslicingWidgetPrivate
+::setupUi(qSlicerPathExplorerReslicingWidget* widget)
 {
-  this->Ui_qSlicerPathXplorerReslicingWidget::setupUi(widget);
+  this->Ui_qSlicerPathExplorerReslicingWidget::setupUi(widget);
 }
 
 //-----------------------------------------------------------------------------
-int qSlicerPathXplorerReslicingWidgetPrivate
+int qSlicerPathExplorerReslicingWidgetPrivate
 ::loadAttributesFromViewer()
 {
   if (!this->TrajectoryItem)
@@ -109,14 +109,14 @@ int qSlicerPathXplorerReslicingWidgetPrivate
     return 0;
     }
 
-  const char* drivingID = this->SliceNode->GetAttribute("PathXplorer.DrivingPathID");
+  const char* drivingID = this->SliceNode->GetAttribute("PathExplorer.DrivingPathID");
   if (!drivingID)
     {
     return 0;
     }
   this->DrivingRulerNodeID.assign(drivingID);
 
-  const char* drivingName = this->SliceNode->GetAttribute("PathXplorer.DrivingPathName");
+  const char* drivingName = this->SliceNode->GetAttribute("PathExplorer.DrivingPathName");
   if (!drivingName)
     {
     return 0;
@@ -124,21 +124,21 @@ int qSlicerPathXplorerReslicingWidgetPrivate
   this->DrivingRulerNodeName.assign(drivingName);
 
   std::stringstream itemPosAttrStr;
-  itemPosAttrStr << "PathXplorer." << ruler->GetName() << "_" << this->SliceNode->GetName() << "_Position";
+  itemPosAttrStr << "PathExplorer." << ruler->GetName() << "_" << this->SliceNode->GetName() << "_Position";
   const char* posStr = this->SliceNode->GetAttribute(itemPosAttrStr.str().c_str());
   this->ReslicePosition = posStr ?
     atof(posStr) :
     0.0;
 
   std::stringstream itemAngleAttrStr;
-  itemAngleAttrStr << "PathXplorer." << ruler->GetName() << "_" << this->SliceNode->GetName() << "_Angle";
+  itemAngleAttrStr << "PathExplorer." << ruler->GetName() << "_" << this->SliceNode->GetName() << "_Angle";
   const char* angleStr = this->SliceNode->GetAttribute(itemAngleAttrStr.str().c_str());
   this->ResliceAngle = angleStr ?
     atof(angleStr) :
     0.0;
 
   std::stringstream itemPerpAttrStr;
-  itemPerpAttrStr << "PathXplorer." << ruler->GetName() << "_" << this->SliceNode->GetName() << "_Perpendicular";
+  itemPerpAttrStr << "PathExplorer." << ruler->GetName() << "_" << this->SliceNode->GetName() << "_Perpendicular";
   const char* perpStr = this->SliceNode->GetAttribute(itemPerpAttrStr.str().c_str());
   if (perpStr)
     {
@@ -149,7 +149,7 @@ int qSlicerPathXplorerReslicingWidgetPrivate
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerReslicingWidgetPrivate
+void qSlicerPathExplorerReslicingWidgetPrivate
 ::saveAttributesToViewer()
 {
   if (!this->TrajectoryItem)
@@ -164,25 +164,25 @@ void qSlicerPathXplorerReslicingWidgetPrivate
     }
 
   std::stringstream posAttrStr;
-  posAttrStr << "PathXplorer." << ruler->GetName() << "_" << this->SliceNode->GetName() << "_Position";
+  posAttrStr << "PathExplorer." << ruler->GetName() << "_" << this->SliceNode->GetName() << "_Position";
   std::stringstream posValStr;
   posValStr << this->ReslicePosition;
   this->SliceNode->SetAttribute(posAttrStr.str().c_str(), posValStr.str().c_str());
 
   std::stringstream angleAttrStr;
-  angleAttrStr << "PathXplorer." << ruler->GetName() << "_" << this->SliceNode->GetName() << "_Angle";
+  angleAttrStr << "PathExplorer." << ruler->GetName() << "_" << this->SliceNode->GetName() << "_Angle";
   std::stringstream angleValStr;
   angleValStr << this->ResliceAngle;
   this->SliceNode->SetAttribute(angleAttrStr.str().c_str(), angleValStr.str().c_str());
 
   std::stringstream perpAttrStr;
-  perpAttrStr << "PathXplorer." << ruler->GetName() << "_" << this->SliceNode->GetName() << "_Perpendicular";
+  perpAttrStr << "PathExplorer." << ruler->GetName() << "_" << this->SliceNode->GetName() << "_Perpendicular";
   this->SliceNode->SetAttribute(perpAttrStr.str().c_str(), this->ReslicePerpendicularRadioButton->isChecked() ?
                                 "ON" :
                                 "OFF");
 }
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerReslicingWidgetPrivate
+void qSlicerPathExplorerReslicingWidgetPrivate
 ::updateWidget()
 {
   if (!this->SliceNode || !this->TrajectoryItem)
@@ -257,12 +257,12 @@ void qSlicerPathXplorerReslicingWidgetPrivate
 }
 
 //-----------------------------------------------------------------------------
-qSlicerPathXplorerReslicingWidget
-::qSlicerPathXplorerReslicingWidget(vtkMRMLSliceNode* sliceNode, QWidget *parentWidget)
+qSlicerPathExplorerReslicingWidget
+::qSlicerPathExplorerReslicingWidget(vtkMRMLSliceNode* sliceNode, QWidget *parentWidget)
   : Superclass (parentWidget)
-    , d_ptr ( new qSlicerPathXplorerReslicingWidgetPrivate(*this) )
+    , d_ptr ( new qSlicerPathExplorerReslicingWidgetPrivate(*this) )
 {
-  Q_D(qSlicerPathXplorerReslicingWidget);
+  Q_D(qSlicerPathExplorerReslicingWidget);
   d->setupUi(this);
 
   if (!sliceNode)
@@ -311,16 +311,16 @@ qSlicerPathXplorerReslicingWidget
 }
 
 //-----------------------------------------------------------------------------
-qSlicerPathXplorerReslicingWidget
-::~qSlicerPathXplorerReslicingWidget()
+qSlicerPathExplorerReslicingWidget
+::~qSlicerPathExplorerReslicingWidget()
 {
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerReslicingWidget
-::setTrajectoryItem(qSlicerPathXplorerTrajectoryItem* item)
+void qSlicerPathExplorerReslicingWidget
+::setTrajectoryItem(qSlicerPathExplorerTrajectoryItem* item)
 {
-  Q_D(qSlicerPathXplorerReslicingWidget);
+  Q_D(qSlicerPathExplorerReslicingWidget);
 
   // Disable everything except button
   this->setEnabled(1);
@@ -349,10 +349,10 @@ void qSlicerPathXplorerReslicingWidget
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerReslicingWidget
+void qSlicerPathExplorerReslicingWidget
 ::onResliceToggled(bool buttonStatus)
 {
-  Q_D(qSlicerPathXplorerReslicingWidget);
+  Q_D(qSlicerPathExplorerReslicingWidget);
 
   if (!d->SliceNode || !d->TrajectoryItem)
     {
@@ -374,8 +374,8 @@ void qSlicerPathXplorerReslicingWidget
 
     d->DrivingRulerNodeID.assign(ruler->GetID());
     d->DrivingRulerNodeName.assign(ruler->GetName());
-    d->SliceNode->SetAttribute("PathXplorer.DrivingPathID",ruler->GetID());
-    d->SliceNode->SetAttribute("PathXplorer.DrivingPathName",ruler->GetName());
+    d->SliceNode->SetAttribute("PathExplorer.DrivingPathID",ruler->GetID());
+    d->SliceNode->SetAttribute("PathExplorer.DrivingPathName",ruler->GetName());
     d->updateWidget();
 
     this->resliceWithRuler(ruler,
@@ -393,10 +393,10 @@ void qSlicerPathXplorerReslicingWidget
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerReslicingWidget
+void qSlicerPathExplorerReslicingWidget
 ::onPerpendicularToggled(bool status)
 {
-  Q_D(qSlicerPathXplorerReslicingWidget);
+  Q_D(qSlicerPathExplorerReslicingWidget);
 
   if (!d->TrajectoryItem)
     {
@@ -418,10 +418,10 @@ void qSlicerPathXplorerReslicingWidget
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerReslicingWidget
+void qSlicerPathExplorerReslicingWidget
 ::onResliceValueChanged(int resliceValue)
 {
-  Q_D(qSlicerPathXplorerReslicingWidget);
+  Q_D(qSlicerPathExplorerReslicingWidget);
 
   if (!d->TrajectoryItem)
     {
@@ -457,7 +457,7 @@ void qSlicerPathXplorerReslicingWidget
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerReslicingWidget
+void qSlicerPathExplorerReslicingWidget
 ::resliceWithRuler(vtkMRMLAnnotationRulerNode* ruler,
                    vtkMRMLSliceNode* viewer,
                    bool perpendicular,

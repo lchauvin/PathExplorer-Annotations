@@ -23,64 +23,64 @@
 // Qt includes
 #include <QtPlugin>
 
-// PathXplorer Logic includes
-#include <vtkSlicerPathXplorerLogic.h>
+// PathExplorer Logic includes
+#include <vtkSlicerPathExplorerLogic.h>
 
-// PathXplorer includes
-#include "qSlicerPathXplorerModule.h"
-#include "qSlicerPathXplorerModuleWidget.h"
+// PathExplorer includes
+#include "qSlicerPathExplorerModule.h"
+#include "qSlicerPathExplorerModuleWidget.h"
 
 //-----------------------------------------------------------------------------
-Q_EXPORT_PLUGIN2(qSlicerPathXplorerModule, qSlicerPathXplorerModule);
+Q_EXPORT_PLUGIN2(qSlicerPathExplorerModule, qSlicerPathExplorerModule);
 
 //-----------------------------------------------------------------------------
 /// \ingroup Slicer_QtModules_ExtensionTemplate
-class qSlicerPathXplorerModulePrivate
+class qSlicerPathExplorerModulePrivate
 {
 public:
-  qSlicerPathXplorerModulePrivate();
+  qSlicerPathExplorerModulePrivate();
 };
 
 //-----------------------------------------------------------------------------
-// qSlicerPathXplorerModulePrivate methods
+// qSlicerPathExplorerModulePrivate methods
 
 //-----------------------------------------------------------------------------
-qSlicerPathXplorerModulePrivate
-::qSlicerPathXplorerModulePrivate()
+qSlicerPathExplorerModulePrivate
+::qSlicerPathExplorerModulePrivate()
 {
 }
 
 //-----------------------------------------------------------------------------
-// qSlicerPathXplorerModule methods
+// qSlicerPathExplorerModule methods
 
 //-----------------------------------------------------------------------------
-qSlicerPathXplorerModule
-::qSlicerPathXplorerModule(QObject* _parent)
+qSlicerPathExplorerModule
+::qSlicerPathExplorerModule(QObject* _parent)
   : Superclass(_parent)
-    , d_ptr(new qSlicerPathXplorerModulePrivate)
+    , d_ptr(new qSlicerPathExplorerModulePrivate)
 {
 }
 
 //-----------------------------------------------------------------------------
-qSlicerPathXplorerModule::~qSlicerPathXplorerModule()
+qSlicerPathExplorerModule::~qSlicerPathExplorerModule()
 {
 }
 
 //-----------------------------------------------------------------------------
-QString qSlicerPathXplorerModule::helpText()const
+QString qSlicerPathExplorerModule::helpText()const
 {
-  return QString("PathXplorer is a module designed to facilitate the creation of trajectory, and visualization of volumes along these trajectories");
+  return QString("PathExplorer is a module designed to facilitate the creation of trajectory, and visualization of volumes along these trajectories");
 }
 
 //-----------------------------------------------------------------------------
-QString qSlicerPathXplorerModule::acknowledgementText()const
+QString qSlicerPathExplorerModule::acknowledgementText()const
 {
   return QString("It is supported by grants 5P01CA067165, 5R01CA124377, 5R01CA138586, 2R44DE019322, 7R01CA124377,"
                  "5R42CA137886, 8P41EB015898");
 }
 
 //-----------------------------------------------------------------------------
-QStringList qSlicerPathXplorerModule::contributors()const
+QStringList qSlicerPathExplorerModule::contributors()const
 {
   QStringList moduleContributors;
   moduleContributors << QString("Laurent Chauvin (SNR), Atsushi Yamada PhD (SNR), Junichi Tokuda (SNR)");
@@ -88,38 +88,38 @@ QStringList qSlicerPathXplorerModule::contributors()const
 }
 
 //-----------------------------------------------------------------------------
-QIcon qSlicerPathXplorerModule::icon()const
+QIcon qSlicerPathExplorerModule::icon()const
 {
-  return QIcon(":/Icons/PathXplorer.png");
+  return QIcon(":/Icons/PathExplorer.png");
 }
 
 //-----------------------------------------------------------------------------
-QStringList qSlicerPathXplorerModule::categories() const
+QStringList qSlicerPathExplorerModule::categories() const
 {
   return QStringList() << "IGT";
 }
 
 //-----------------------------------------------------------------------------
-QStringList qSlicerPathXplorerModule::dependencies() const
+QStringList qSlicerPathExplorerModule::dependencies() const
 {
   return QStringList() << "Annotations";
 }
 
 //-----------------------------------------------------------------------------
-void qSlicerPathXplorerModule::setup()
+void qSlicerPathExplorerModule::setup()
 {
   this->Superclass::setup();
 }
 
 //-----------------------------------------------------------------------------
-qSlicerAbstractModuleRepresentation * qSlicerPathXplorerModule
+qSlicerAbstractModuleRepresentation * qSlicerPathExplorerModule
 ::createWidgetRepresentation()
 {
-  return new qSlicerPathXplorerModuleWidget;
+  return new qSlicerPathExplorerModuleWidget;
 }
 
 //-----------------------------------------------------------------------------
-vtkMRMLAbstractLogic* qSlicerPathXplorerModule::createLogic()
+vtkMRMLAbstractLogic* qSlicerPathExplorerModule::createLogic()
 {
-  return vtkSlicerPathXplorerLogic::New();
+  return vtkSlicerPathExplorerLogic::New();
 }

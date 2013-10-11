@@ -23,7 +23,7 @@
 #ifndef __vtkMRMLPathPlannerTrajectoryNode_h
 #define __vtkMRMLPathPlannerTrajectoryNode_h
 
-#include "vtkSlicerPathXplorerModuleMRMLExport.h"
+#include "vtkSlicerPathExplorerModuleMRMLExport.h"
 #include "vtkMRMLAnnotationHierarchyNode.h" 
 
 class vtkMRMLNode;
@@ -31,7 +31,7 @@ class vtkMRMLScene;
 class vtkMRMLAnnotationFiducialNode;
 class vtkMRMLAnnotationRulerNode;
 
-class  VTK_SLICER_PATHXPLORER_MODULE_MRML_EXPORT vtkMRMLPathPlannerTrajectoryNode : public vtkMRMLAnnotationHierarchyNode
+class  VTK_SLICER_PATHEXPLORER_MODULE_MRML_EXPORT vtkMRMLPathPlannerTrajectoryNode : public vtkMRMLAnnotationHierarchyNode
 {
 public:
   static vtkMRMLPathPlannerTrajectoryNode *New();

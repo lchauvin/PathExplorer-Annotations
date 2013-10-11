@@ -20,12 +20,12 @@
  
 ==============================================================================*/
 
-#ifndef __qSlicerPathXplorerModuleWidget_h
-#define __qSlicerPathXplorerModuleWidget_h
+#ifndef __qSlicerPathExplorerModuleWidget_h
+#define __qSlicerPathExplorerModuleWidget_h
 
 // SlicerQt includes
 #include "qSlicerAbstractModuleWidget.h"
-#include "qSlicerPathXplorerModuleExport.h"
+#include "qSlicerPathExplorerModuleExport.h"
 
 // VTK includes
 #include <ctkVTKObject.h>
@@ -33,13 +33,13 @@
 // Qt includes
 #include <QTableWidget>
 
-class qSlicerPathXplorerModuleWidgetPrivate;
+class qSlicerPathExplorerModuleWidgetPrivate;
 class vtkMRMLAnnotationFiducialNode;
 class vtkMRMLNode;
 class vtkMRMLSliceNode;
 
 /// \ingroup Slicer_QtModules_ExtensionTemplate
-class Q_SLICER_QTMODULES_PATHXPLORER_EXPORT qSlicerPathXplorerModuleWidget :
+class Q_SLICER_QTMODULES_PATHEXPLORER_EXPORT qSlicerPathExplorerModuleWidget :
   public qSlicerAbstractModuleWidget
 {
   Q_OBJECT
@@ -48,8 +48,8 @@ class Q_SLICER_QTMODULES_PATHXPLORER_EXPORT qSlicerPathXplorerModuleWidget :
 public:
 
   typedef qSlicerAbstractModuleWidget Superclass;
-  qSlicerPathXplorerModuleWidget(QWidget *parent=0);
-  virtual ~qSlicerPathXplorerModuleWidget();
+  qSlicerPathExplorerModuleWidget(QWidget *parent=0);
+  virtual ~qSlicerPathExplorerModuleWidget();
 
 public slots:
   void onEntryListNodeChanged(vtkMRMLNode* newList);
@@ -79,15 +79,15 @@ public slots:
   void onTargetTableWidgetAddButtonToggled(bool state);
 
 protected:
-  QScopedPointer<qSlicerPathXplorerModuleWidgetPrivate> d_ptr;
+  QScopedPointer<qSlicerPathExplorerModuleWidgetPrivate> d_ptr;
   
   virtual void setup();
   void addNewFiducialItem(QTableWidget* tableWidget, vtkMRMLAnnotationFiducialNode* fiducialNode);
   void addNewRulerItem(vtkMRMLAnnotationFiducialNode* entryPoint, vtkMRMLAnnotationFiducialNode* targetPoint);
 
 private:
-  Q_DECLARE_PRIVATE(qSlicerPathXplorerModuleWidget);
-  Q_DISABLE_COPY(qSlicerPathXplorerModuleWidget);
+  Q_DECLARE_PRIVATE(qSlicerPathExplorerModuleWidget);
+  Q_DISABLE_COPY(qSlicerPathExplorerModuleWidget);
 };
 
 #endif
