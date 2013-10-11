@@ -20,6 +20,8 @@
 
   ==============================================================================*/
 
+#include "vtkSlicerVersionConfigure.h"
+
 // PathExplorer Widgets includes
 #include "qSlicerPathExplorerTableWidget.h"
 #include "ui_qSlicerPathExplorerTableWidget.h"
@@ -181,7 +183,11 @@ void qSlicerPathExplorerTableWidget
         vtkMRMLSelectionNode *snode = mrmlAppLogic->GetSelectionNode();
         if (snode)
           {
-	  snode->SetActiveAnnotationID("vtkMRMLAnnotationFiducialNode");
+#if (Slicer_VERSION_MAJOR == 4 && Slicer_VERSION_MINOR <= 2)
+          snode->SetActiveAnnotationID("vtkMRMLAnnotationFiducialNode");
+#else
+          snode->SetActivePlaceNodeClassName("vtkMRMLAnnotationFiducialNode");
+#endif
           }
         }
       }
