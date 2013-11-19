@@ -39,10 +39,11 @@
 #include "qSlicerPathExplorerReslicingWidget.h"
 
 // MRML
-#include "vtkMRMLAnnotationFiducialNode.h"
 #include "vtkMRMLAnnotationHierarchyNode.h"
 #include "vtkMRMLAnnotationPointDisplayNode.h"
 #include "vtkMRMLAnnotationRulerNode.h"
+#include "vtkMRMLMarkupsFiducialNode.h"
+#include "vtkMRMLMarkupsDisplayNode.h"
 #include "vtkMRMLPathPlannerTrajectoryNode.h"
 #include "vtkMRMLSliceNode.h"
 
